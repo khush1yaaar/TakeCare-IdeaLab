@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "934505990792",
+    "project_id": "takecare-idealab",
+    "storage_bucket": "takecare-idealab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934505990792:android:88d9905ed3d945145e6d3d",
+        "android_client_info": {
+          "package_name": "com.example.takecare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnrna5AkSBSn5n-3P0bSP97COVoZXRqpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
