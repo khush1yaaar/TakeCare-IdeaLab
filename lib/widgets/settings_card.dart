@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:takecare/providers/auth_provider.dart';
+import 'package:takecare/screens/getstarted_screen.dart';
 
 // ignore: must_be_immutable
 class SettingsCard extends StatefulWidget {
@@ -14,11 +16,10 @@ class _SettingsCardState extends State<SettingsCard> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final _auth = AuthProvider();
 
     return GestureDetector(
-      onTap: () {
-        
-      },
+      onTap: () {},
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         padding: const EdgeInsets.all(16),
@@ -32,7 +33,8 @@ class _SettingsCardState extends State<SettingsCard> {
           ),
           boxShadow: [
             BoxShadow(
-              color: theme.appBarTheme.backgroundColor ??
+              color:
+                  theme.appBarTheme.backgroundColor ??
                   // ignore: deprecated_member_use
                   Colors.blue.withOpacity(0.2),
               blurRadius: 10,
@@ -41,7 +43,8 @@ class _SettingsCardState extends State<SettingsCard> {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, // Pushes right content to the end
+          mainAxisAlignment:
+              MainAxisAlignment.spaceBetween, // Pushes right content to the end
           children: [
             Expanded(
               child: Text(
@@ -69,10 +72,23 @@ class _SettingsCardState extends State<SettingsCard> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(width: 8), // Spacing before arrow
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: theme.appBarTheme.iconTheme?.color,
-                  size: 16, // Adjusted icon size
+                GestureDetector(
+                  onTap: () async {
+                    if (widget.title == "logout") {
+                      await _auth.logout();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GetStartedScreen(),
+                        ),
+                      );
+                    }
+                  },
+                  child: Icon(
+                    Icons.arrow_forward_ios,
+                    color: theme.appBarTheme.iconTheme?.color,
+                    size: 16, // Adjusted icon size
+                  ),
                 ),
               ],
             ),

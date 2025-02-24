@@ -73,6 +73,12 @@ class ProfileScreen extends StatelessWidget {
                     title: "Account Settings",
                     currentSetting: "Manage",
                   ),
+                  SettingsCard(
+                    title: "logout",
+                    currentSetting: "",
+                  ),
+
+                  SizedBox(height: 100),
                 ],
               ),
             ),

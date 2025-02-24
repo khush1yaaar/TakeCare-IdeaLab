@@ -14,6 +14,7 @@ class GetStartedScreen extends StatefulWidget {
 class _GetStartedScreenState extends State<GetStartedScreen> {
   final PageController _controller = PageController();
   int _currentPage = 0;
+  bool _isLoading = false;
 
   final List<Widget> _pages = [
     const PageContent(
@@ -58,7 +59,9 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
+      body: _isLoading ? 
+      Center(child: CircularProgressIndicator()) :
+      Column(
         children: [
           Expanded(
             child: SizedBox(
@@ -98,10 +101,15 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
               backgroundColor: Colors.blue.shade100,
             ),
             onPressed: () async {
-              print("BUTTON PRESSED Sign in with Google");
+              setState(() {
+                _isLoading = true; // Show loader
+              });
+
               final userCredential = await _auth.loginWithGoogle();
 
               if (userCredential != null) {
+                await _auth.storeUserDataIfNew(userCredential.user);
+
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => BottomNavBar()),
@@ -109,6 +117,10 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
               } else {
                 print("Login failed");
               }
+
+              setState(() {
+                _isLoading = false; // Hide loader after process completes
+              });
             },
 
             icon: Image.asset('lib/images/google_logo.png', height: 24),
