@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:takecare/providers/auth_provider.dart';
 import 'package:takecare/screens/getstarted_screen.dart';
+import 'package:takecare/widgets/theme_popup.dart';
 
 // ignore: must_be_immutable
 class SettingsCard extends StatefulWidget {
@@ -19,7 +20,16 @@ class _SettingsCardState extends State<SettingsCard> {
     final _auth = AuthProvider();
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        if (widget.title == "Theme") {
+          ThemePopup.show(context, widget.currentSetting, (newTheme) {
+            setState(() {
+              widget.currentSetting = newTheme;
+            });
+          });
+        }
+      },
+
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         padding: const EdgeInsets.all(16),

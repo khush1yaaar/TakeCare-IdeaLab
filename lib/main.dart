@@ -35,15 +35,29 @@ class MyApp extends StatelessWidget {
       theme: CustomTheme.lightTheme,
       darkTheme: CustomTheme.darkTheme,
       themeMode: currentTheme.currentTheme,
-      home: StreamBuilder<firebase_auth.User?>(
-        stream: firebase_auth.FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            return snapshot.hasData ? BottomNavBar() : const GetStartedScreen();
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
-      ),
+      home: const AuthWrapper(), // Move StreamBuilder to a separate widget
+    );
+  }
+}
+
+class AuthWrapper extends StatefulWidget {
+  const AuthWrapper({super.key});
+
+  @override
+  _AuthWrapperState createState() => _AuthWrapperState();
+}
+
+class _AuthWrapperState extends State<AuthWrapper> {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<firebase_auth.User?>(
+      stream: firebase_auth.FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          return snapshot.hasData ? BottomNavBar() : const GetStartedScreen();
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
     );
   }
 }

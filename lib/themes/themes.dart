@@ -31,15 +31,15 @@ class CustomTheme with ChangeNotifier {
         headlineMedium: TextStyle(color: Colors.blue.shade700),
         headlineSmall: TextStyle(color: Colors.blue.shade700),
         bodyLarge: TextStyle(color: Colors.grey.shade800),
-        bodyMedium: TextStyle(color: Colors.grey.shade800),
-        bodySmall: TextStyle(color: Colors.grey.shade800),
+        bodyMedium: TextStyle(color: Colors.grey.shade700),
+        bodySmall: TextStyle(color: Colors.grey.shade600),
       ),
     );
   }
 
   static ThemeData get darkTheme {
     return ThemeData(
-      primaryColor: Colors.blue.shade900,
+      primaryColor: Colors.blue.shade800,
       scaffoldBackgroundColor: Colors.grey.shade900, // Updated
 
       appBarTheme: AppBarTheme(
