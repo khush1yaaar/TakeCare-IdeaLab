@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-CustomTheme currentTheme = CustomTheme();
+class ThemeController extends GetxController {
+  RxBool isDarkTheme = true.obs; // Observable variable
 
-class CustomTheme with ChangeNotifier {
-  static bool isDarkTheme = true;
-
-  ThemeMode get currentTheme => isDarkTheme ? ThemeMode.dark : ThemeMode.light;
+  ThemeMode get themeMode => isDarkTheme.value ? ThemeMode.dark : ThemeMode.light;
 
   void toggleTheme() {
-    isDarkTheme = !isDarkTheme;
-    notifyListeners();
+    isDarkTheme.value = !isDarkTheme.value;
+    Get.changeThemeMode(themeMode);
   }
+}
 
+class CustomTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       primaryColor: Colors.blue.shade500,
-      scaffoldBackgroundColor: Colors.white, // Updated
-
+      scaffoldBackgroundColor: Colors.white,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.blue.shade50,
         titleTextStyle: TextStyle(color: Colors.blue.shade500),
         iconTheme: IconThemeData(color: Colors.blue.shade500),
       ),
-
       textTheme: TextTheme(
         displayLarge: TextStyle(color: Colors.grey.shade800),
         displayMedium: TextStyle(color: Colors.grey.shade800),
@@ -40,14 +39,12 @@ class CustomTheme with ChangeNotifier {
   static ThemeData get darkTheme {
     return ThemeData(
       primaryColor: Colors.blue.shade800,
-      scaffoldBackgroundColor: Colors.grey.shade900, // Updated
-
+      scaffoldBackgroundColor: Colors.grey.shade900,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.grey.shade900,
         titleTextStyle: TextStyle(color: Colors.blue.shade600),
         iconTheme: IconThemeData(color: Colors.blue.shade600),
       ),
-
       textTheme: TextTheme(
         displayLarge: TextStyle(color: Colors.blueGrey.shade200),
         displayMedium: TextStyle(color: Colors.blueGrey.shade200),

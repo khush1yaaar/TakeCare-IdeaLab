@@ -1,40 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:takecare/providers/auth_provider.dart';
-import 'package:takecare/screens/getstarted_screen.dart';
-import 'package:takecare/widgets/theme_popup.dart';
 
-// ignore: must_be_immutable
-class SettingsCard extends StatefulWidget {
-  String title;
-  String currentSetting;
-  SettingsCard({super.key, required this.title, required this.currentSetting});
+class SettingsCard extends StatelessWidget {
+  final String title;
+  final String currentSetting;
+  final VoidCallback? onTap;
 
-  @override
-  State<SettingsCard> createState() => _SettingsCardState();
-}
+  const SettingsCard({
+    super.key,
+    required this.title,
+    required this.currentSetting,
+    this.onTap,
+  });
 
-class _SettingsCardState extends State<SettingsCard> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final _auth = AuthProvider();
 
     return GestureDetector(
-      onTap: () {
-        if (widget.title == "Theme") {
-          ThemePopup.show(context, widget.currentSetting, (newTheme) {
-            setState(() {
-              widget.currentSetting = newTheme;
-            });
-          });
-        }
-      },
-
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          // ignore: deprecated_member_use
           color: Colors.white.withOpacity(0.2), // Blend with app bar theme
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
@@ -53,12 +40,11 @@ class _SettingsCardState extends State<SettingsCard> {
           ],
         ),
         child: Row(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceBetween, // Pushes right content to the end
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: Text(
-                widget.title,
+                title,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -68,12 +54,12 @@ class _SettingsCardState extends State<SettingsCard> {
                 maxLines: 1,
               ),
             ),
-            SizedBox(width: 16), // Spacing between title and right-side content
+            const SizedBox(width: 16),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  widget.currentSetting,
+                  currentSetting,
                   style: TextStyle(
                     fontSize: 14,
                     // ignore: deprecated_member_use
@@ -81,24 +67,11 @@ class _SettingsCardState extends State<SettingsCard> {
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(width: 8), // Spacing before arrow
-                GestureDetector(
-                  onTap: () async {
-                    if (widget.title == "logout") {
-                      await _auth.logout();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => GetStartedScreen(),
-                        ),
-                      );
-                    }
-                  },
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    color: theme.appBarTheme.iconTheme?.color,
-                    size: 16, // Adjusted icon size
-                  ),
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: theme.appBarTheme.iconTheme?.color,
+                  size: 16,
                 ),
               ],
             ),

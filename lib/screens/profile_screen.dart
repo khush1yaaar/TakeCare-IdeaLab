@@ -1,90 +1,123 @@
 import 'package:flutter/material.dart';
-import 'package:takecare/providers/auth_provider.dart';
+import 'package:get/get.dart';
+import 'package:takecare/controllers/auth_controller.dart';
 import 'package:takecare/themes/themes.dart';
-import 'package:takecare/widgets/settings_card.dart';
+import 'package:takecare/widgets/alert_popups/language_popup.dart';
+import 'package:takecare/widgets/alert_popups/theme_popup.dart';
+import 'package:takecare/widgets/cards/settings_card.dart';
 
 class ProfileScreen extends StatelessWidget {
-  final AuthProvider _authProvider = AuthProvider();
+  final AuthController _authController = Get.put(AuthController());
 
   ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final user = _authProvider.currentUser;
+    final ThemeController themeController = Get.find<ThemeController>();
 
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 300,
-            flexibleSpace: FlexibleSpaceBar(
-              background: user?.photoURL != null
-                  ? Image.network(user!.photoURL!, fit: BoxFit.cover)
-                  : const Icon(Icons.account_circle, size: 100),
-            ),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(bottom: Radius.circular(0)),
-            ),
-            backgroundColor: Colors.blue.shade500,
-            elevation: 8,
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              color: theme.primaryColor,
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    user?.displayName ?? 'User',
-                    style: const TextStyle(
-                      fontSize: 30,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    user?.email ?? "email",
-                    style: const TextStyle(fontSize: 15, color: Colors.white70),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                children: [
-                  SettingsCard(
-                    title: "Theme",
-                    currentSetting: CustomTheme.isDarkTheme ? "Dark" : "Light",
-                  ),
-                  SettingsCard(
-                    title: "Language",
-                    currentSetting: "English",
-                  ),
-                  SettingsCard(
-                    title: "Past Reports",
-                    currentSetting: "View History",
-                  ),
-                  SettingsCard(
-                    title: "Account Settings",
-                    currentSetting: "Manage",
-                  ),
-                  SettingsCard(
-                    title: "logout",
-                    currentSetting: "",
-                  ),
+      body: Obx(() {
+        final user = _authController.user.value;
+        final languages = [""];
 
-                  SizedBox(height: 100),
-                ],
+        return CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              expandedHeight: 300,
+              flexibleSpace: FlexibleSpaceBar(
+                background:
+                    user?.photoURL != null
+                        ? Image.network(user!.photoURL!, fit: BoxFit.cover)
+                        : const Icon(
+                          Icons.account_circle,
+                          size: 100,
+                          color: Colors.white,
+                        ),
+              ),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(bottom: Radius.circular(0)),
+              ),
+              backgroundColor: Colors.blue.shade500,
+              elevation: 8,
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                color:
+                    themeController.isDarkTheme.value
+                        ? Colors.grey.shade900
+                        : Colors.white, // Dynamic background color
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user?.displayName ?? 'User',
+                      style: TextStyle(
+                        fontSize: 30,
+                        color:
+                            themeController.isDarkTheme.value
+                                ? Colors.white
+                                : Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      user?.email ?? "email",
+                      style: TextStyle(
+                        fontSize: 15,
+                        color:
+                            themeController.isDarkTheme.value
+                                ? Colors.white70
+                                : Colors.black54,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
-      ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    SettingsCard(
+                      title: "Theme",
+                      currentSetting:
+                          themeController.isDarkTheme.value ? "Dark" : "Light",
+                      onTap: () => ThemePopup.show(context),
+                    ),
+                    SettingsCard(
+                      title: "Language",
+                      currentSetting: "English",
+                      onTap:
+                          () => LanguagePopup.show(
+                            context,
+                            "English" as List<String>,
+                          ),
+                    ),
+                    SettingsCard(
+                      title: "Past Reports",
+                      currentSetting: "View History",
+                      onTap: () {},
+                    ),
+                    SettingsCard(
+                      title: "Account Settings",
+                      currentSetting: "Manage",
+                      onTap: () {},
+                    ),
+                    SettingsCard(
+                      title: "Logout",
+                      currentSetting: "",
+                      onTap: () => _authController.logout(),
+                    ),
+                    const SizedBox(height: 100),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 }

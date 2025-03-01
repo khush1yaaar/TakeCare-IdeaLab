@@ -23,7 +23,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   void initState() {
-    homeScreen = const HomeScreen();
+    homeScreen = HomeScreen();
     journalScreen = const JournalScreen();
     chatBotScreen = const ChatBotScreen();
     profileScreen = ProfileScreen();
