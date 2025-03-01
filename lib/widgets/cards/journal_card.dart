@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class JournalCard extends StatelessWidget {
+  const JournalCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     String todayDate = DateFormat('yyyy-MM-dd').format(DateTime.now());

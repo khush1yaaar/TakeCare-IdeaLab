@@ -4,7 +4,6 @@ class LanguagePopup {
   static void show(
     BuildContext context,
     List<String> languages,
-    Function(String) onSelected,
   ) {
     showDialog(
       context: context,
@@ -29,7 +28,6 @@ class LanguagePopup {
                     style: TextStyle(color: theme.textTheme.bodyLarge?.color),
                   ),
                   onTap: () {
-                    onSelected(languages[index]);
                     Navigator.pop(context);
                   },
                 );

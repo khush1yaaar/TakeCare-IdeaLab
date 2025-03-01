@@ -21,6 +21,7 @@ class HomeCard extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
+            // ignore: deprecated_member_use
             color: Colors.white.withOpacity(0.2),
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
@@ -29,6 +30,7 @@ class HomeCard extends StatelessWidget {
             ),
             boxShadow: [
               BoxShadow(
+                // ignore: deprecated_member_use
                 color: theme.appBarTheme.backgroundColor ?? Colors.blue.withOpacity(0.2),
                 blurRadius: 10,
                 spreadRadius: 1,
@@ -52,6 +54,7 @@ class HomeCard extends StatelessWidget {
                 subtitle,
                 style: TextStyle(
                   fontSize: 14,
+                  // ignore: deprecated_member_use
                   color: theme.appBarTheme.iconTheme?.color?.withOpacity(0.7),
                 ),
               ),

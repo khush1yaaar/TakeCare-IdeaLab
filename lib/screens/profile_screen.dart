@@ -92,7 +92,8 @@ class ProfileScreen extends StatelessWidget {
                       onTap:
                           () => LanguagePopup.show(
                             context,
-                            "English" as List<String>,
+                            languages,
+                            
                           ),
                     ),
                     SettingsCard(

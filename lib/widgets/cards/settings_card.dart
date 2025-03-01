@@ -22,6 +22,7 @@ class SettingsCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
+          // ignore: deprecated_member_use
           color: Colors.white.withOpacity(0.2), // Blend with app bar theme
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
