@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LanguagePopup {
   static void show(
     BuildContext context,
-    List<String> languages,
+    List<Map<String, String>> languages, // List with language details
   ) {
     showDialog(
       context: context,
@@ -12,7 +13,7 @@ class LanguagePopup {
 
         return AlertDialog(
           title: Text(
-            "Select Language",
+            "Select Language".tr,
             style: TextStyle(color: theme.primaryColor),
           ),
           backgroundColor: theme.scaffoldBackgroundColor,
@@ -23,12 +24,31 @@ class LanguagePopup {
               itemCount: languages.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(
-                    languages[index],
-                    style: TextStyle(color: theme.textTheme.bodyLarge?.color),
+                  title: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: theme.primaryColor, // Border color
+                        width: 1.5, // Border thickness
+                      ),
+                      borderRadius: BorderRadius.circular(8), // Rounded corners
+                    ),
+                    padding: const EdgeInsets.all(
+                      12,
+                    ), // Padding inside the border
+                    child: Text(
+                      languages[index]['name']!, // Display language name
+                      style: TextStyle(color: theme.textTheme.bodyLarge?.color),
+                    ),
                   ),
+
                   onTap: () {
-                    Navigator.pop(context);
+                    String langCode = languages[index]['code']!;
+                    String countryCode = languages[index]['country']!;
+
+                    // Update the app's locale
+                    Get.updateLocale(Locale(langCode, countryCode));
+
+                    Navigator.pop(context); // Close the popup
                   },
                 );
               },
@@ -36,7 +56,10 @@ class LanguagePopup {
           ),
           actions: [
             TextButton(
-              child: Text("Cancel", style: TextStyle(color: theme.primaryColor)),
+              child: Text(
+                "Cancel".tr,
+                style: TextStyle(color: theme.primaryColor),
+              ),
               onPressed: () => Navigator.pop(context),
             ),
           ],

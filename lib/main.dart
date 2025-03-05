@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:takecare/screens/getstarted_screen.dart';
 import 'package:takecare/screens/bottom_nav_bar.dart';
 import 'package:takecare/themes/themes.dart';
+import 'package:takecare/utils/languages.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         theme: CustomTheme.lightTheme,
         darkTheme: CustomTheme.darkTheme,
         themeMode: themeController.themeMode,
+        translations: AppTranslations(),
+        locale: Locale('en', 'US'), 
+        fallbackLocale: Locale('en', 'US'), 
         home: const AuthWrapper(),
       ),
     );

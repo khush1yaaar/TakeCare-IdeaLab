@@ -1,5 +1,6 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import "package:get/get_utils/get_utils.dart";
 import "package:takecare/widgets/cards/home_card.dart";
 
 class HomeScreen extends StatelessWidget {
@@ -25,34 +26,33 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   HomeCard(
-                    title: "Self Assessment",
-                    subtitle: "Evaluate your mental well-being",
-                    
+                    title: "Self Assessment".tr,
+                    subtitle: "Evaluate your mental well-being".tr,
                   ),
                   HomeCard(
-                    title: "Meditation Guide",
-                    subtitle: "Relax with guided meditation",
+                    title: "Meditation Guide".tr,
+                    subtitle: "Relax with guided meditation".tr,
                     onTap: () {
                       // Handle navigation or action
                     },
                   ),
                   HomeCard(
-                    title: "Common Mental Health Issues",
-                    subtitle: "Learn about anxiety, depression & more",
+                    title: "Common Mental Health Issues".tr,
+                    subtitle: "Learn about anxiety, depression & more".tr,
                     onTap: () {
                       // Handle navigation or action
                     },
                   ),
                   HomeCard(
-                    title: "Daily Journal",
-                    subtitle: "Track your thoughts and feelings",
+                    title: "Daily Journal".tr,
+                    subtitle: "Track your thoughts and feelings".tr,
                     onTap: () {
                       // Handle navigation or action
                     },
                   ),
                   HomeCard(
-                    title: "Stress Management",
-                    subtitle: "Tips to reduce stress effectively",
+                    title: "Stress Management".tr,
+                    subtitle: "Tips to reduce stress effectively".tr,
                     onTap: () {
                       // Handle navigation or action
                     },

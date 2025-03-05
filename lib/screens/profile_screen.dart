@@ -18,7 +18,11 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       body: Obx(() {
         final user = _authController.user.value;
-        final languages = [""];
+        List<Map<String, String>> languages = [
+          {'name': 'English', 'code': 'en', 'country': 'US'},
+          {'name': 'Français', 'code': 'fr', 'country': 'FR'},
+          {'name': 'हिन्दी', 'code': 'hi', 'country': 'IN'},
+        ];
 
         return CustomScrollView(
           slivers: [
@@ -89,12 +93,7 @@ class ProfileScreen extends StatelessWidget {
                     SettingsCard(
                       title: "Language",
                       currentSetting: "English",
-                      onTap:
-                          () => LanguagePopup.show(
-                            context,
-                            languages,
-                            
-                          ),
+                      onTap: () => LanguagePopup.show(context, languages),
                     ),
                     SettingsCard(
                       title: "Past Reports",
