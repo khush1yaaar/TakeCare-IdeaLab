@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:takecare/controllers/language_controller.dart';
 import 'package:takecare/screens/getstarted_screen.dart';
 import 'package:takecare/screens/bottom_nav_bar.dart';
 import 'package:takecare/themes/themes.dart';
-import 'package:takecare/utils/languages.dart';
+import 'package:takecare/utils/languages/languages.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -13,6 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Get.put(LanguageController()); 
   runApp(MyApp());
 }
 

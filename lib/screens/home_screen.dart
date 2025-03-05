@@ -1,6 +1,7 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
-import "package:get/get_utils/get_utils.dart";
+import "package:get/get.dart";
+import "package:takecare/screens/self_assessment_screen.dart";
 import "package:takecare/widgets/cards/home_card.dart";
 
 class HomeScreen extends StatelessWidget {
@@ -28,33 +29,36 @@ class HomeScreen extends StatelessWidget {
                   HomeCard(
                     title: "Self Assessment".tr,
                     subtitle: "Evaluate your mental well-being".tr,
+                    onTap: () {
+                      Get.to(SelfAssessmentScreen());
+                    },
                   ),
                   HomeCard(
                     title: "Meditation Guide".tr,
                     subtitle: "Relax with guided meditation".tr,
                     onTap: () {
-                      // Handle navigation or action
+                      
                     },
                   ),
                   HomeCard(
                     title: "Common Mental Health Issues".tr,
                     subtitle: "Learn about anxiety, depression & more".tr,
                     onTap: () {
-                      // Handle navigation or action
+                      
                     },
                   ),
                   HomeCard(
                     title: "Daily Journal".tr,
                     subtitle: "Track your thoughts and feelings".tr,
                     onTap: () {
-                      // Handle navigation or action
+                      
                     },
                   ),
                   HomeCard(
                     title: "Stress Management".tr,
                     subtitle: "Tips to reduce stress effectively".tr,
                     onTap: () {
-                      // Handle navigation or action
+                      
                     },
                   ),
                 ],

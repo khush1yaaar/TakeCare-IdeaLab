@@ -31,7 +31,7 @@ class CustomTheme {
         headlineSmall: TextStyle(color: Colors.blue.shade700),
         bodyLarge: TextStyle(color: Colors.grey.shade800),
         bodyMedium: TextStyle(color: Colors.grey.shade700),
-        bodySmall: TextStyle(color: Colors.grey.shade600),
+        bodySmall: TextStyle(color: Colors.grey.shade400),
       ),
     );
   }

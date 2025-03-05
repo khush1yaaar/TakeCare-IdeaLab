@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
-import 'package:takecare/utils/french_translations.dart';
-import 'package:takecare/utils/hindi_translations.dart';
+import 'package:takecare/utils/languages/french_translations.dart';
+import 'package:takecare/utils/languages/hindi_translations.dart';
 
 class AppTranslations extends Translations {
+  String currentLanguage = "English";
   @override
  Map<String, Map<String, String>> get keys => {
         'en_US': {

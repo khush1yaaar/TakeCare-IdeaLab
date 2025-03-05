@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:takecare/controllers/auth_controller.dart';
+import 'package:takecare/controllers/language_controller.dart';
 import 'package:takecare/themes/themes.dart';
 import 'package:takecare/widgets/alert_popups/language_popup.dart';
 import 'package:takecare/widgets/alert_popups/theme_popup.dart';
@@ -14,6 +15,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = Get.find<ThemeController>();
+    final LanguageController controller = Get.find();
 
     return Scaffold(
       body: Obx(() {
@@ -90,11 +92,11 @@ class ProfileScreen extends StatelessWidget {
                           themeController.isDarkTheme.value ? "Dark" : "Light",
                       onTap: () => ThemePopup.show(context),
                     ),
-                    SettingsCard(
+                    Obx(() => SettingsCard(
                       title: "Language",
-                      currentSetting: "English",
+                      currentSetting: controller.currentLanguage.value,
                       onTap: () => LanguagePopup.show(context, languages),
-                    ),
+                    )),
                     SettingsCard(
                       title: "Past Reports",
                       currentSetting: "View History",
