@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:takecare/controllers/auth_controller.dart';
 import 'package:takecare/controllers/language_controller.dart';
+import 'package:takecare/screens/past_reports_screen.dart';
 import 'package:takecare/themes/themes.dart';
 import 'package:takecare/widgets/alert_popups/language_popup.dart';
 import 'package:takecare/widgets/alert_popups/logout_popup.dart';
@@ -103,7 +104,9 @@ class ProfileScreen extends StatelessWidget {
                     SettingsCard(
                       title: "Past Reports",
                       currentSetting: "View History",
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(PastReportsScreen());
+                      },
                     ),
                     SettingsCard(
                       title: "Account Settings",

@@ -50,6 +50,7 @@ class AuthController extends GetxController {
           'name': user.displayName ?? '',
           'email': user.email ?? '',
           'journal': {},
+          'reports': {},
           'createdAt': FieldValue.serverTimestamp(),
         });
         Get.snackbar("Success", "New user data stored in Firestore!");

@@ -45,7 +45,7 @@ class ADHD {
       }
     }
 
-    for (int i = 6; i < 18; i++) { // Check remaining Part B responses
+    for (int i = 6; i < 18; i++) {
       if (shadedScores.contains(responses[i])) {
         partBShadedCount++;
       }
@@ -74,5 +74,4 @@ class ADHD {
       "partBShadedCount": partBShadedCount
     };
   }
-
 }

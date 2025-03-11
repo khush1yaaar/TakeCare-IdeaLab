@@ -26,49 +26,49 @@ class SelfAssessmentScreen extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               children: [
                 HomeCard(
-                  title: "ADHD Test",
+                  title: "ADHD Test".tr,
                   subtitle:
-                      "Ever feel like your mind is in overdrive? Struggling to focus, organize, or sit still? Take this test to understand if ADHD might be a factor.",
+                      "Ever feel like your mind is in overdrive? Struggling to focus, organize, or sit still? Take this test to understand if ADHD might be a factor.".tr,
                   onTap: () => Get.to(TestScreen(test: ADHD())),
                 ),
                 HomeCard(
-                  title: "Depression Test",
+                  title: "Depression Test".tr,
                   subtitle:
-                      "Feeling persistently down, empty, or exhausted? If joy feels distant and daily tasks overwhelming, this test can help provide clarity.",
+                      "Feeling persistently down, empty, or exhausted? If joy feels distant and daily tasks overwhelming, this test can help provide clarity.".tr,
                   onTap:
                       () => Get.snackbar(
-                        "Depression Test Selected",
-                        "Starting your test...",
+                        "Depression Test Selected".tr,
+                        "Starting your test...".tr,
                       ),
                 ),
                 HomeCard(
-                  title: "Anxiety Test",
+                  title: "Anxiety Test".tr,
                   subtitle:
-                      "Is worry taking over your life? If restlessness, overthinking, or constant unease feel familiar, this test can offer insights.",
+                      "Is worry taking over your life? If restlessness, overthinking, or constant unease feel familiar, this test can offer insights.".tr,
                   onTap:
                       () => Get.snackbar(
-                        "Anxiety Test Selected",
-                        "Starting your test...",
+                        "Anxiety Test Selected".tr,
+                        "Starting your test...".tr,
                       ),
                 ),
                 HomeCard(
-                  title: "Bipolar Test",
+                  title: "Bipolar Test".tr,
                   subtitle:
-                      "Swinging between extreme highs and deep lows? If emotional shifts feel unpredictable, this test can help you understand more.",
+                      "Swinging between extreme highs and deep lows? If emotional shifts feel unpredictable, this test can help you understand more.".tr,
                   onTap:
                       () => Get.snackbar(
-                        "Bipolar Test Selected",
-                        "Starting your test...",
+                        "Bipolar Test Selected".tr,
+                        "Starting your test...".tr,
                       ),
                 ),
                 HomeCard(
-                  title: "Eating Disorder Test",
+                  title: "Eating Disorder Test".tr,
                   subtitle:
-                      "Do thoughts about food, weight, or control dominate your mind? If eating feels more like a battle, this test might help you find clarity.",
+                      "Do thoughts about food, weight, or control dominate your mind? If eating feels more like a battle, this test might help you find clarity.".tr,
                   onTap:
                       () => Get.snackbar(
-                        "Eating Disorder Test Selected",
-                        "Starting your test...",
+                        "Eating Disorder Test Selected".tr,
+                        "Starting your test...".tr,
                       ),
                 ),
               ],
