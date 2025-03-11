@@ -4,6 +4,7 @@ import 'package:takecare/controllers/auth_controller.dart';
 import 'package:takecare/controllers/language_controller.dart';
 import 'package:takecare/themes/themes.dart';
 import 'package:takecare/widgets/alert_popups/language_popup.dart';
+import 'package:takecare/widgets/alert_popups/logout_popup.dart';
 import 'package:takecare/widgets/alert_popups/theme_popup.dart';
 import 'package:takecare/widgets/cards/settings_card.dart';
 
@@ -92,11 +93,13 @@ class ProfileScreen extends StatelessWidget {
                           themeController.isDarkTheme.value ? "Dark" : "Light",
                       onTap: () => ThemePopup.show(context),
                     ),
-                    Obx(() => SettingsCard(
-                      title: "Language",
-                      currentSetting: controller.currentLanguage.value,
-                      onTap: () => LanguagePopup.show(context, languages),
-                    )),
+                    Obx(
+                      () => SettingsCard(
+                        title: "Language",
+                        currentSetting: controller.currentLanguage.value,
+                        onTap: () => LanguagePopup.show(context, languages),
+                      ),
+                    ),
                     SettingsCard(
                       title: "Past Reports",
                       currentSetting: "View History",
@@ -110,7 +113,17 @@ class ProfileScreen extends StatelessWidget {
                     SettingsCard(
                       title: "Logout",
                       currentSetting: "",
-                      onTap: () => _authController.logout(),
+                      onTap:
+                          () => showDialog(
+                            context: context,
+                            builder:
+                                (context) => LogoutPopup(
+                                  onLogout: () {
+                                    _authController.logout();
+                                    Get.back();
+                                  },
+                                ),
+                          ),
                     ),
                     const SizedBox(height: 100),
                   ],

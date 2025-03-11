@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:takecare/controllers/auth_controller.dart';
 import 'package:takecare/controllers/language_controller.dart';
+import 'package:takecare/controllers/pet_controller.dart';
 import 'package:takecare/screens/getstarted_screen.dart';
 import 'package:takecare/screens/bottom_nav_bar.dart';
 import 'package:takecare/themes/themes.dart';
@@ -11,10 +13,10 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  Get.put(LanguageController()); 
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  Get.put(LanguageController());
+  Get.put(AuthController());
+  Get.put(PetController());
   runApp(MyApp());
 }
 
@@ -24,13 +26,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx( () => GetMaterialApp(
+    return Obx(
+      () => GetMaterialApp(
         theme: CustomTheme.lightTheme,
         darkTheme: CustomTheme.darkTheme,
         themeMode: themeController.themeMode,
         translations: AppTranslations(),
-        locale: Locale('en', 'US'), 
-        fallbackLocale: Locale('en', 'US'), 
+        locale: Locale('en', 'US'),
+        fallbackLocale: Locale('en', 'US'),
         home: const AuthWrapper(),
       ),
     );

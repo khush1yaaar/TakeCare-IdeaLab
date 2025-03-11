@@ -102,7 +102,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                     Get.offAll(() => BottomNavBar());
                                     },
                   icon: Image.asset('lib/images/google_logo.png', height: 24),
-                  label: const Text('Sign in with Google'),
+                  label: const Text('Sign in with Google', style: TextStyle(fontSize: 16, color: Colors.black)),
                 ),
                 const SizedBox(height: 40),
                 const SizedBox(height: 50),

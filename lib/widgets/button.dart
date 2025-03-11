@@ -14,6 +14,7 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return GestureDetector(
       onTap: isEnabled ? onPressed : null,
       child: Container(
@@ -21,7 +22,9 @@ class Button extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         margin: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
-          color: isEnabled ? Colors.blueAccent : Colors.grey[700],
+          color: isEnabled ? 
+          text == 'Logout' ? const Color.fromARGB(255, 251, 41, 26) : theme.primaryColor :
+          Colors.grey[700],
           borderRadius: BorderRadius.circular(12),
         ),
         alignment: Alignment.center,

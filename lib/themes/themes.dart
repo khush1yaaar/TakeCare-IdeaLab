@@ -46,7 +46,7 @@ class CustomTheme {
         iconTheme: IconThemeData(color: Colors.blue.shade600),
       ),
       textTheme: TextTheme(
-        displayLarge: TextStyle(color: Colors.blueGrey.shade200),
+        displayLarge: TextStyle(color: Colors.blueGrey.shade100),
         displayMedium: TextStyle(color: Colors.blueGrey.shade200),
         displaySmall: TextStyle(color: Colors.blueGrey.shade200),
         headlineLarge: TextStyle(color: Colors.blue.shade300),

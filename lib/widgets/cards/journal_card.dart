@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class JournalCard extends StatelessWidget {
-  const JournalCard({super.key});
+  final Map<String, dynamic> entry;
+  const JournalCard({super.key, required this.entry});
 
   @override
   Widget build(BuildContext context) {
-    String todayDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
-
     return Card(
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.blue, width: 2.0),
@@ -24,14 +22,11 @@ class JournalCard extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              'Date: $todayDate',
+              'Date: ${entry['date']}',
               style: TextStyle(fontSize: 16, color: Colors.grey[600]),
             ),
             SizedBox(height: 16),
-            Text(
-              'Your journal content goes here...',
-              style: TextStyle(fontSize: 16),
-            ),
+            Text(entry['content'], style: TextStyle(fontSize: 16)),
           ],
         ),
       ),

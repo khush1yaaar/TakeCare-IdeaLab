@@ -28,7 +28,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     chatBotScreen = const ChatBotScreen();
     profileScreen = ProfileScreen();
 
-    pages = [homeScreen,journalScreen, chatBotScreen, profileScreen];
+    pages = [homeScreen, chatBotScreen, journalScreen, profileScreen];
     super.initState();
   }
 
@@ -56,11 +56,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
             color: Colors.white,
           ),
           Icon(
-            Icons.article_outlined,
+            Icons.chat_bubble_outline,
             color: Colors.white,
           ),
           Icon(
-            Icons.chat_bubble_outline,
+            Icons.article_outlined,
             color: Colors.white,
           ),
           Icon(
