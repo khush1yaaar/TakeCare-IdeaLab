@@ -14,6 +14,7 @@ class HindiTranslations extends Translations {
           'Track your thoughts and feelings': 'अपने विचारों और भावनाओं को ट्रैक करें',
           'Stress Management': 'तनाव प्रबंधन',
           'Tips to reduce stress effectively': 'तनाव को प्रभावी ढंग से कम करने के सुझाव',
+          
         }
       };
 }

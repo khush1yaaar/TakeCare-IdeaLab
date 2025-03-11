@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:takecare/screens/journal_writing_screen.dart';
 import 'package:takecare/widgets/cards/journal_card.dart';
 
@@ -31,7 +32,8 @@ class _JournalScreenState extends State<JournalScreen> {
   }
 
   void writeJournal() {
-    Get.to(JournalWritingScreen());
+    String todayDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
+    Get.to(JournalWritingScreen(date: todayDate));
   }
 
   @override
@@ -56,16 +58,19 @@ class _JournalScreenState extends State<JournalScreen> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 }
-            
+
                 final journalEntries = snapshot.data ?? [];
                 bool isJournalEmpty = journalEntries.isEmpty;
-            
+
                 if (isJournalEmpty) {
                   return Center(
                     child: ElevatedButton(
                       onPressed: writeJournal,
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+                        padding: EdgeInsets.symmetric(
+                          vertical: 20,
+                          horizontal: 40,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -78,10 +83,17 @@ class _JournalScreenState extends State<JournalScreen> {
                     ),
                   );
                 }
-            
-                return ListView.builder(
+
+                return GridView.builder(
                   padding: EdgeInsets.all(16),
                   itemCount: journalEntries.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, // 2 items per row
+                    crossAxisSpacing: 16, // Horizontal spacing
+                    mainAxisSpacing: 16, // Vertical spacing
+                    childAspectRatio:
+                        0.8, // Adjust height/width ratio as needed
+                  ),
                   itemBuilder: (context, index) {
                     return JournalCard(entry: journalEntries[index]);
                   },
@@ -94,7 +106,9 @@ class _JournalScreenState extends State<JournalScreen> {
       floatingActionButton: FutureBuilder<List<Map<String, dynamic>>>(
         future: fetchJournalEntries(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting || snapshot.data == null || snapshot.data!.isEmpty) {
+          if (snapshot.connectionState == ConnectionState.waiting ||
+              snapshot.data == null ||
+              snapshot.data!.isEmpty) {
             return SizedBox.shrink();
           }
           return Padding(

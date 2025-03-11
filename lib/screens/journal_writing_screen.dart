@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 
 class JournalWritingScreen extends StatefulWidget {
-  const JournalWritingScreen({super.key});
+  final String date; // Accepts date as a parameter
+  const JournalWritingScreen({super.key, required this.date});
 
   @override
   State<JournalWritingScreen> createState() => _JournalWritingScreenState();
@@ -14,13 +14,11 @@ class _JournalWritingScreenState extends State<JournalWritingScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final String userId = FirebaseAuth.instance.currentUser?.uid ?? "User ID";
   final TextEditingController _journalController = TextEditingController();
-  late String todayDate;
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    todayDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
     _loadJournalEntry();
   }
 
@@ -31,8 +29,8 @@ class _JournalWritingScreenState extends State<JournalWritingScreen> {
       Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
       if (data.containsKey('journal') &&
           data['journal'] is Map &&
-          data['journal'][todayDate] != null) {
-        _journalController.text = data['journal'][todayDate];
+          data['journal'][widget.date] != null) {
+        _journalController.text = data['journal'][widget.date];
       }
     }
     setState(() => isLoading = false);
@@ -40,7 +38,7 @@ class _JournalWritingScreenState extends State<JournalWritingScreen> {
 
   Future<void> _saveJournalEntry() async {
     await _firestore.collection('users').doc(userId).set({
-      'journal': {todayDate: _journalController.text},
+      'journal': {widget.date: _journalController.text},
     }, SetOptions(merge: true));
     Navigator.pop(context);
   }
@@ -51,7 +49,6 @@ class _JournalWritingScreenState extends State<JournalWritingScreen> {
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,7 +56,7 @@ class _JournalWritingScreenState extends State<JournalWritingScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 30.0, left: 20),
                 child: Text(
-                  'How was your day?',
+                  widget.date, // Show selected date
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -69,10 +66,7 @@ class _JournalWritingScreenState extends State<JournalWritingScreen> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: GestureDetector(
-                  onTap: () {
-                    _saveJournalEntry();
-                    Navigator.pop(context);
-                  },
+                  onTap: _saveJournalEntry,
                   child: Icon(Icons.check, color: theme.primaryColor),
                 ),
               ),
@@ -81,23 +75,23 @@ class _JournalWritingScreenState extends State<JournalWritingScreen> {
           isLoading
               ? Center(child: CircularProgressIndicator())
               : GestureDetector(
-                onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    controller: _journalController,
-                    maxLines: null,
-                    keyboardType: TextInputType.multiline,
-                    style: TextStyle(fontSize: 18),
-                    cursorColor: theme.primaryColor,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Start writing your thoughts... ',
+                  onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      controller: _journalController,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      style: TextStyle(fontSize: 18),
+                      cursorColor: theme.primaryColor,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Start writing your thoughts... ',
+                      ),
+                      autofocus: true,
                     ),
-                    autofocus: true,
                   ),
                 ),
-              ),
         ],
       ),
     );
