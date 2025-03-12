@@ -16,17 +16,9 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-            bottom: 200, 
-            left: MediaQuery.of(context).size.width / 2 - 50, // Centering
-            child: GestureDetector(
-              onTap: () => penguinController.nod(),
-              child: Pet(),
-            ),
-          ),
-        ],
+      body: GestureDetector(
+        onTap: () => penguinController.move(),
+        child: Center(child: Pet()),
       ),
     );
   }

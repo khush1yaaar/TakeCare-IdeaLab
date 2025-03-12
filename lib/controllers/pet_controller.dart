@@ -5,6 +5,16 @@ class PetController extends GetxController with GetTickerProviderStateMixin {
   late AnimationController _nodController;
   late AnimationController _blinkController;
   late AnimationController _moveController;
+  late AnimationController wingController;
+  late Animation<double> wingAnimation;
+  
+
+  void _flapWings() async {
+    for (int i = 0; i < 4; i++) { // Flap 4 times
+      await wingController.forward();
+      await wingController.reverse();
+    }
+  }
 
   var isNodding = false.obs;
   var isBlinking = false.obs;
@@ -15,6 +25,16 @@ class PetController extends GetxController with GetTickerProviderStateMixin {
     _nodController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _blinkController = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
     _moveController = AnimationController(vsync: this, duration: Duration(milliseconds: 700));
+    wingController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+      lowerBound: -0.3,
+      upperBound: 0.3,
+    );
+
+    wingAnimation = CurvedAnimation(parent: wingController, curve: Curves.easeInOut);
+
+    _flapWings();
     super.onInit();
   }
 
@@ -44,6 +64,7 @@ class PetController extends GetxController with GetTickerProviderStateMixin {
     _nodController.dispose();
     _blinkController.dispose();
     _moveController.dispose();
+    wingController.dispose();
     super.onClose();
   }
 }

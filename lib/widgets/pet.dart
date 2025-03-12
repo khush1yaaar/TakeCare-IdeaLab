@@ -7,160 +7,233 @@ class Pet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => SizedBox(
-          width: 100,
-          height: 150,
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 500),
-            transform: Matrix4.translationValues(
-              controller.isMoving.value ? 5.0 : 0.0,
-              0.0,
-              0.0,
-            ),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                // Body
-                Positioned(
-                  bottom: 10,
-                  child: Container(
-                    width: 80,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
+    return Obx(
+      () => Container(
+        width: 150,
+        height: 150,
+        alignment: Alignment.center,
+        clipBehavior: Clip.none,
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 500),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              // Feet
+              Positioned(
+                bottom: 10,
+                left: 40,
+                child: Container(
+                  width: 20,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                // White belly
-                Positioned(
-                  bottom: 20,
-                  child: Container(
-                    width: 50,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
+              ),
+              Positioned(
+                bottom: 10,
+                right: 40,
+                child: Container(
+                  width: 20,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                // Head (separated)
-                Positioned(
-                  top: -10,
-                  child: AnimatedContainer(
-                    duration: Duration(milliseconds: 500),
-                    transform: Matrix4.translationValues(
-                      0.0,
-                      controller.isNodding.value ? 5.0 : 0.0,
-                      0.0,
-                    ),
-                    child: Container(
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
+              ),
+              // Body
+              Positioned(
+                bottom: 10,
+                child: Container(
+                  width: 80,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(50),
                   ),
                 ),
-                // Eyes
-                Positioned(
-                  top: 5,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+              ),
+              // White belly
+              Positioned(
+                bottom: 20,
+                child: Container(
+                  width: 55,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                ),
+              ),
+              // Head with Eyes, Beak, and Blush
+              Positioned(
+                top: -10,
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 500),
+                  transform: Matrix4.translationValues(
+                    0.0,
+                    controller.isNodding.value ? 5.0 : 0.0,
+                    0.0,
+                  ),
+                  child: Stack(
+                    alignment: Alignment.center,
                     children: [
-                      AnimatedOpacity(
-                        opacity: controller.isBlinking.value ? 0.0 : 1.0,
-                        duration: Duration(milliseconds: 100),
+                      // Head
+                      Container(
+                        width: 70,
+                        height: 100, // Reduced to blend better with the face
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                      // Face
+                      Positioned(
+                        bottom: 10,
                         child: Container(
-                          width: 10,
-                          height: 10,
+                          width: 55,
+                          height: 60,
                           decoration: BoxDecoration(
-                            color: Colors.black,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Positioned(
-                            top: 5,
-                            right: 5,
-                            child: Container(
-                              width: 4,
-                              height: 4,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                              ),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(50),
+                              bottom: Radius.circular(50),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(width: 15),
-                      AnimatedOpacity(
-                        opacity: controller.isBlinking.value ? 0.0 : 1.0,
-                        duration: Duration(milliseconds: 100),
-                        child: Container(
-                          width: 10,
-                          height: 10,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Container(
-                              width: 4,
-                              height: 4,
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                shape: BoxShape.circle,
+
+                      // Eyes
+                      Positioned(
+                        top: 40,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AnimatedOpacity(
+                              opacity: controller.isBlinking.value ? 0.0 : 1.0,
+                              duration: Duration(milliseconds: 100),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    width: 10,
+                                    height: 10,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 3,
+                                    height: 3,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
+                            SizedBox(width: 15),
+                            AnimatedOpacity(
+                              opacity: controller.isBlinking.value ? 0.0 : 1.0,
+                              duration: Duration(milliseconds: 100),
+                              child: Container(
+                                width: 10,
+                                height: 10,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Blush (Baby Pink Cheeks)
+                      Positioned(
+                        left: 10,
+                        top: 55,
+                        child: Container(
+                          width: 12,
+                          height: 12,
+                          decoration: BoxDecoration(
+                            color: Colors.pink.shade100,
+                            shape: BoxShape.circle,
                           ),
+                        ),
+                      ),
+                      Positioned(
+                        right: 10,
+                        top: 55,
+                        child: Container(
+                          width: 12,
+                          height: 12,
+                          decoration: BoxDecoration(
+                            color: Colors.pink.shade100,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                      // Beak
+                      Positioned(
+                        top: 55,
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 20,
+                              height: 10,
+                              decoration: BoxDecoration(
+                                color: Colors.orange.shade400,
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(100),
+                                ),
+                                border: Border.all(
+                                  color: Colors.orange.shade700,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 14,
+                              height: 6,
+                              decoration: BoxDecoration(
+                                color: Colors.orange,
+                                borderRadius: BorderRadius.vertical(
+                                  bottom: Radius.circular(100),
+                                ),
+                                border: Border.all(
+                                  color: Colors.orange.shade700,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                // Beak
-                Positioned(
-                  top: 25,
-                  child: Container(
-                    width: 20,
-                    height: 10,
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(5),
+              ),
+              // Flapping Hands (Wings)
+              Positioned(
+                top: 70,
+                left: 35,
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 20),
+                  transform: Matrix4.rotationZ(
+                    controller.isMoving.value ? 1 : 0,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(100),
+                      bottomRight: Radius.circular(100),
                     ),
                   ),
-                ),
-                // Feet
-                Positioned(
-                  bottom: 0,
-                  left: 20,
-                  child: Container(
-                    width: 20,
-                    height: 10,
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 20,
-                  child: Container(
-                    width: 20,
-                    height: 10,
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                ),
-                // Hands
-                Positioned(
-                  top: 60,
-                  left: 10,
                   child: Container(
                     width: 15,
                     height: 30,
@@ -170,9 +243,15 @@ class Pet extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 60,
-                  right: 10,
+              ),
+              Positioned(
+                top: 70,
+                right: 30,
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 20),
+                  transform: Matrix4.rotationZ(
+                    controller.isMoving.value ? -1 : 0,
+                  ),
                   child: Container(
                     width: 15,
                     height: 30,
@@ -182,9 +261,11 @@ class Pet extends StatelessWidget {
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

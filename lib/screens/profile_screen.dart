@@ -109,11 +109,6 @@ class ProfileScreen extends StatelessWidget {
                       },
                     ),
                     SettingsCard(
-                      title: "Account Settings",
-                      currentSetting: "Manage",
-                      onTap: () {},
-                    ),
-                    SettingsCard(
                       title: "Logout",
                       currentSetting: "",
                       onTap:

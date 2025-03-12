@@ -64,10 +64,15 @@ class _JournalWritingScreenState extends State<JournalWritingScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: const EdgeInsets.only(right: 15.0, top: 15),
                 child: GestureDetector(
                   onTap: _saveJournalEntry,
-                  child: Icon(Icons.check, color: theme.primaryColor),
+                  child: Icon(
+                    Icons.check, 
+                    color: theme.primaryColor, 
+                    size: 35,
+                    weight: 30,
+                    ),
                 ),
               ),
             ],
