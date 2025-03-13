@@ -71,7 +71,7 @@ class Pet extends StatelessWidget {
               Positioned(
                 top: -10,
                 child: AnimatedContainer(
-                  duration: Duration(milliseconds: 500),
+                  duration: Duration(milliseconds: 200),
                   transform: Matrix4.translationValues(
                     0.0,
                     controller.isNodding.value ? 5.0 : 0.0,
@@ -124,12 +124,16 @@ class Pet extends StatelessWidget {
                                       shape: BoxShape.circle,
                                     ),
                                   ),
-                                  Container(
-                                    width: 3,
-                                    height: 3,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle,
+                                  Positioned(
+                                    top: 1,
+                                    left: 5,
+                                    child: Container(
+                                      width: 3,
+                                      height: 3,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -139,13 +143,29 @@ class Pet extends StatelessWidget {
                             AnimatedOpacity(
                               opacity: controller.isBlinking.value ? 0.0 : 1.0,
                               duration: Duration(milliseconds: 100),
-                              child: Container(
-                                width: 10,
-                                height: 10,
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  shape: BoxShape.circle,
-                                ),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    width: 10,
+                                    height: 10,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 1,
+                                    left: 5,
+                                    child: Container(
+                                      width: 3,
+                                      height: 3,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -199,7 +219,7 @@ class Pet extends StatelessWidget {
                               width: 14,
                               height: 6,
                               decoration: BoxDecoration(
-                                color: Colors.orange,
+                                color: Colors.orange.shade400,
                                 borderRadius: BorderRadius.vertical(
                                   bottom: Radius.circular(100),
                                 ),
@@ -218,46 +238,41 @@ class Pet extends StatelessWidget {
               ),
               // Flapping Hands (Wings)
               Positioned(
-                top: 70,
+                top: 60,
                 left: 35,
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: 20),
                   transform: Matrix4.rotationZ(
                     controller.isMoving.value ? 1 : 0,
                   ),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(100),
-                      bottomRight: Radius.circular(100),
-                    ),
-                  ),
                   child: Container(
-                    width: 15,
-                    height: 30,
+                    width: 13,
+                    height: 45,
                     decoration: BoxDecoration(
                       color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.horizontal(
+                        left: Radius.circular(50),
+                      ),
                     ),
                   ),
                 ),
               ),
               Positioned(
                 top: 70,
-                right: 30,
+                right: 35,
                 child: AnimatedContainer(
                   duration: Duration(milliseconds: 20),
                   transform: Matrix4.rotationZ(
                     controller.isMoving.value ? -1 : 0,
                   ),
                   child: Container(
-                    width: 15,
-                    height: 30,
+                    width: 13,
+                    height: 40,
                     decoration: BoxDecoration(
                       color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.horizontal(
+                        right: Radius.circular(50),
+                      ),
                     ),
                   ),
                 ),

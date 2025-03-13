@@ -16,8 +16,9 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue.shade50,
       body: GestureDetector(
-        onTap: () => penguinController.move(),
+        onTap: () => penguinController.flapWings(),
         child: Center(child: Pet()),
       ),
     );
