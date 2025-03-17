@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:takecare/controllers/pet_controller.dart';
+import 'package:takecare/widgets/message.dart';
 import 'package:takecare/widgets/pet.dart';
 
 class ChatBotScreen extends StatefulWidget {
@@ -11,15 +12,22 @@ class ChatBotScreen extends StatefulWidget {
 }
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
-  final PetController penguinController = Get.find<PetController>();
+  final PetController petController = Get.find<PetController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue.shade50,
-      body: GestureDetector(
-        onTap: () => penguinController.flapWings(),
-        child: Center(child: Pet()),
+      body: Column(
+        children: [
+          Message(message: "Hi, I'm Pookie", isUserMessage: true),
+          GestureDetector(
+            onTap: () {
+              petController.flapWings();
+            },
+            child: Center(child: Pet()),
+          ),
+        ],
       ),
     );
   }

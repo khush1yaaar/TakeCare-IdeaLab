@@ -40,6 +40,7 @@ class _JournalWritingScreenState extends State<JournalWritingScreen> {
     await _firestore.collection('users').doc(userId).set({
       'journal': {widget.date: _journalController.text},
     }, SetOptions(merge: true));
+    // ignore: use_build_context_synchronously
     Navigator.pop(context);
   }
 

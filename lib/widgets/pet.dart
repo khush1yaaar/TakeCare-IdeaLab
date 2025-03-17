@@ -5,6 +5,8 @@ import 'package:takecare/controllers/pet_controller.dart';
 class Pet extends StatelessWidget {
   final PetController controller = Get.put(PetController());
 
+  Pet({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -43,6 +45,60 @@ class Pet extends StatelessWidget {
                   ),
                 ),
               ),
+              // Left Wing (Pivot from Top Edge)
+              Positioned(
+                top: 65,
+                left: 40,
+                child: AnimatedBuilder(
+                  animation: controller.flapAnimation,
+                  builder: (context, child) {
+                    return Transform(
+                      alignment: Alignment.topCenter,
+                      transform: Matrix4.rotationZ(
+                        -controller.flapAnimation.value,
+                      ), // Counterclockwise (-90°)
+                      child: Container(
+                        width: 13,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.horizontal(
+                            left: Radius.circular(50),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              // Right Wing (Pivot from Top Edge)
+              Positioned(
+                top: 65,
+                right: 40,
+                child: AnimatedBuilder(
+                  animation: controller.flapAnimation,
+                  builder: (context, child) {
+                    return Transform(
+                      alignment: Alignment.topCenter,
+                      transform: Matrix4.rotationZ(
+                        controller.flapAnimation.value,
+                      ), // Clockwise (+90°)
+                      child: Container(
+                        width: 13,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.horizontal(
+                            right: Radius.circular(50),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
               // Body
               Positioned(
                 bottom: 10,
@@ -171,31 +227,42 @@ class Pet extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // Blush (Baby Pink Cheeks)
+                      // Blush with animated color change during smile
                       Positioned(
                         left: 10,
                         top: 55,
-                        child: Container(
-                          width: 12,
-                          height: 12,
-                          decoration: BoxDecoration(
-                            color: Colors.pink.shade100,
-                            shape: BoxShape.circle,
-                          ),
+                        child: AnimatedBuilder(
+                          animation: controller.blushAnimation,
+                          builder: (context, child) {
+                            return Container(
+                              width: 12,
+                              height: 12,
+                              decoration: BoxDecoration(
+                                color: controller.blushAnimation.value,
+                                shape: BoxShape.circle,
+                              ),
+                            );
+                          },
                         ),
                       ),
                       Positioned(
                         right: 10,
                         top: 55,
-                        child: Container(
-                          width: 12,
-                          height: 12,
-                          decoration: BoxDecoration(
-                            color: Colors.pink.shade100,
-                            shape: BoxShape.circle,
-                          ),
+                        child: AnimatedBuilder(
+                          animation: controller.blushAnimation,
+                          builder: (context, child) {
+                            return Container(
+                              width: 12,
+                              height: 12,
+                              decoration: BoxDecoration(
+                                color: controller.blushAnimation.value,
+                                shape: BoxShape.circle,
+                              ),
+                            );
+                          },
                         ),
                       ),
+
                       // Beak
                       Positioned(
                         top: 55,
@@ -233,47 +300,6 @@ class Pet extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
-                ),
-              ),
-              // Flapping Hands (Wings)
-              Positioned(
-                top: 60,
-                left: 35,
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 20),
-                  transform: Matrix4.rotationZ(
-                    controller.isMoving.value ? 1 : 0,
-                  ),
-                  child: Container(
-                    width: 13,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.horizontal(
-                        left: Radius.circular(50),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 70,
-                right: 35,
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 20),
-                  transform: Matrix4.rotationZ(
-                    controller.isMoving.value ? -1 : 0,
-                  ),
-                  child: Container(
-                    width: 13,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.horizontal(
-                        right: Radius.circular(50),
-                      ),
-                    ),
                   ),
                 ),
               ),

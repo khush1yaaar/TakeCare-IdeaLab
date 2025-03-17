@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PastReportCard extends StatelessWidget {
   final String test;
   final Map<String, dynamic> report;
-  PastReportCard({required this.test, required this.report});
+  const PastReportCard({super.key, required this.test, required this.report});
 
   @override
   Widget build(BuildContext context) {

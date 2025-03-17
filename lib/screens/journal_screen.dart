@@ -115,8 +115,8 @@ class _JournalScreenState extends State<JournalScreen> {
             padding: const EdgeInsets.only(bottom: 70),
             child: FloatingActionButton(
               onPressed: writeJournal,
-              child: Icon(Icons.edit, color: Colors.white),
               backgroundColor: theme.primaryColor,
+              child: Icon(Icons.edit, color: Colors.white),
             ),
           );
         },
