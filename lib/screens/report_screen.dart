@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ReportScreen extends StatefulWidget {
-  const ReportScreen({super.key});
+  Map<String, String> report;
+  ReportScreen({super.key, required this.report});
 
   @override
   State<ReportScreen> createState() => _ReportScreenState();

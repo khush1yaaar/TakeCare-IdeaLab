@@ -14,6 +14,7 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
+  List<int> responses = [];
   int currentQuestionIndex = 0;
   int? selectedOption;
 
@@ -78,17 +79,21 @@ class _TestScreenState extends State<TestScreen> {
 
                   const Spacer(),
 
-                  if (selectedOption != null) 
+                  if (selectedOption != null)
                     Button(
                       text: "Next",
                       onPressed: () {
-                        if (currentQuestionIndex < widget.test.questions.length - 1) {
+                        if (currentQuestionIndex <
+                            widget.test.questions.length - 1) {
                           setState(() {
                             currentQuestionIndex++;
+                            responses.add(selectedOption!);
                             selectedOption = null;
                           });
                         } else {
-                          Get.to(ReportScreen());
+                          responses.add(selectedOption!);
+                          Map<String, String> report = widget.test.generateReport(responses);
+                          Get.to(ReportScreen(report: report));
                         }
                       },
                     ),

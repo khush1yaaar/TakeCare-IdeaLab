@@ -23,6 +23,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
           Message(message: "Hi, I'm Pookie", isUserMessage: true),
           GestureDetector(
             onTap: () {
+              petController.smile();
               petController.flapWings();
             },
             child: Center(child: Pet()),
