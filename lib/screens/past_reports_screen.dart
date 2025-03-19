@@ -17,41 +17,56 @@ class _PastReportsScreenState extends State<PastReportsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<DocumentSnapshot>(
-        future:
-            _firestore.collection('users').doc(_auth.currentUser?.uid).get(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (!snapshot.hasData || !snapshot.data!.exists) {
-            return const Center(
-              child: Text('No reports yet', style: TextStyle(fontSize: 18)),
-            );
-          }
-
-          Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
-          Map<String, dynamic>? reports =
-              data['reports'] as Map<String, dynamic>?;
-
-          if (reports == null || reports.isEmpty) {
-            return const Center(
-              child: Text('No reports yet', style: TextStyle(fontSize: 18)),
-            );
-          }
-
-          return ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: reports.length,
-            itemBuilder: (context, index) {
-              String test = reports.keys.elementAt(index);
-              Map<String, dynamic> report = reports[test];
-              return PastReportCard(test: test, report: report);
-            },
-          );
-        },
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 30.0, left: 20),
+            child: Text(
+              'Your Past Reports',
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Expanded(
+            child: FutureBuilder<DocumentSnapshot>(
+              future:
+                  _firestore.collection('users').doc(_auth.currentUser?.uid).get(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+            
+                if (!snapshot.hasData || !snapshot.data!.exists) {
+                  return const Center(
+                    child: Text('No reports yet', style: TextStyle(fontSize: 18)),
+                  );
+                }
+            
+                Map<String, dynamic> data =
+                    snapshot.data!.data() as Map<String, dynamic>;
+                Map<String, dynamic>? reports =
+                    data['reports'] as Map<String, dynamic>?;
+            
+                if (reports == null || reports.isEmpty) {
+                  return const Center(
+                    child: Text('No reports yet', style: TextStyle(fontSize: 18)),
+                  );
+                }
+            
+                return ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: reports.length,
+                  itemBuilder: (context, index) {
+                    String test = reports.keys.elementAt(index);
+                    Map<String, dynamic> report = reports[test];
+                    return PastReportCard(test: test, report: report);
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
