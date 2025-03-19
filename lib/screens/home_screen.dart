@@ -69,6 +69,7 @@ class HomeScreen extends StatelessWidget {
                     onTap:
                         () => Get.to(TestScreen(test: EatingDisorder())),
                   ),
+                  SizedBox(height: 80),
                 ],
               ),
             ),

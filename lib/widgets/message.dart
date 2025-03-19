@@ -18,7 +18,7 @@ class Message extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isUserMessage ? Colors.blue : Colors.grey[300],
+          color: isUserMessage ? Colors.grey[300] : Colors.blue,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12),
             topRight: const Radius.circular(12),
@@ -29,7 +29,7 @@ class Message extends StatelessWidget {
         child: Text(
           message,
           style: TextStyle(
-            color: isUserMessage ? Colors.white : Colors.black,
+            color: isUserMessage ? Colors.black : Colors.white,
             fontSize: 16,
           ),
         ),
