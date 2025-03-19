@@ -1,6 +1,7 @@
 import 'package:get/get_utils/get_utils.dart';
 
 class Bipolar {
+  String name = "Bipolar Disorder";
   List<String> questions = [
     "Elevated Mood?".tr,
     "Increased Motor Activity-Energy?".tr,
@@ -23,7 +24,7 @@ class Bipolar {
     "Extreme".tr,
   ];
 
-  static Map<String, dynamic> generateReport(List<int> responses) {
+  Map<String, dynamic> generateReport(List<int> responses) {
     if (responses.length != 11) {
       throw ArgumentError("Invalid number of responses. Expected 11.");
     }
@@ -32,18 +33,21 @@ class Bipolar {
 
     String severity;
     if (totalScore >= 26) {
-      severity = "Severe mania: Immediate professional evaluation is recommended.".tr;
+      severity =
+          "Severe mania: Immediate professional evaluation is recommended.".tr;
     } else if (totalScore >= 20) {
-      severity = "Moderate mania: Consultation with a healthcare provider is advised.".tr;
+      severity =
+          "Moderate mania: Consultation with a healthcare provider is advised."
+              .tr;
     } else if (totalScore >= 12) {
-      severity = "Mild mania: Monitoring and lifestyle adjustments might help.".tr;
+      severity =
+          "Mild mania: Monitoring and lifestyle adjustments might help.".tr;
     } else {
-      severity = "Minimal symptoms: No significant manic indications, but self-care is beneficial.".tr;
+      severity =
+          "Minimal symptoms: No significant manic indications, but self-care is beneficial."
+              .tr;
     }
 
-    return {
-      "severity": severity,
-      "totalScore": totalScore,
-    };
+    return {"severity": severity, "totalScore": totalScore};
   }
 }

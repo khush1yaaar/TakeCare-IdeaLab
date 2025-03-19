@@ -1,7 +1,12 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
-import "package:takecare/screens/self_assessment_screen.dart";
+import "package:takecare/screens/test_screen.dart";
+import "package:takecare/utils/self_assessment_tests/adhd.dart";
+import "package:takecare/utils/self_assessment_tests/anxiety.dart";
+import "package:takecare/utils/self_assessment_tests/bipolar.dart";
+import "package:takecare/utils/self_assessment_tests/depression.dart";
+import "package:takecare/utils/self_assessment_tests/eating_disorder.dart";
 import "package:takecare/widgets/cards/home_card.dart";
 
 class HomeScreen extends StatelessWidget {
@@ -25,41 +30,44 @@ class HomeScreen extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   HomeCard(
-                    title: "Self Assessment".tr,
-                    subtitle: "Evaluate your mental well-being".tr,
-                    onTap: () {
-                      Get.to(SelfAssessmentScreen());
-                    },
+                    title: "ADHD Test".tr,
+                    subtitle:
+                        "Ever feel like your mind is in overdrive? Struggling to focus, organize, or sit still? Take this test to understand if ADHD might be a factor."
+                            .tr,
+                    onTap: () => Get.to(TestScreen(test: ADHD())),
                   ),
                   HomeCard(
-                    title: "Meditation Guide".tr,
-                    subtitle: "Relax with guided meditation".tr,
-                    onTap: () {
-                      
-                    },
+                    title: "Depression Test".tr,
+                    subtitle:
+                        "Feeling persistently down, empty, or exhausted? If joy feels distant and daily tasks overwhelming, this test can help provide clarity."
+                            .tr,
+                    onTap: () => Get.to(TestScreen(test: Depression())),
                   ),
                   HomeCard(
-                    title: "Common Mental Health Issues".tr,
-                    subtitle: "Learn about anxiety, depression & more".tr,
-                    onTap: () {
-                      
-                    },
+                    title: "Anxiety Test".tr,
+                    subtitle:
+                        "Is worry taking over your life? If restlessness, overthinking, or constant unease feel familiar, this test can offer insights."
+                            .tr,
+                    onTap: () => Get.to(TestScreen(test: Anxiety())),
                   ),
                   HomeCard(
-                    title: "Daily Journal".tr,
-                    subtitle: "Track your thoughts and feelings".tr,
-                    onTap: () {
-                      
-                    },
+                    title: "Bipolar Test".tr,
+                    subtitle:
+                        "Swinging between extreme highs and deep lows? If emotional shifts feel unpredictable, this test can help you understand more."
+                            .tr,
+                    onTap: () => Get.to(TestScreen(test: Bipolar())),
                   ),
                   HomeCard(
-                    title: "Stress Management".tr,
-                    subtitle: "Tips to reduce stress effectively".tr,
-                    onTap: () {
-                      
-                    },
+                    title: "Eating Disorder Test".tr,
+                    subtitle:
+                        "Do thoughts about food, weight, or control dominate your mind? If eating feels more like a battle, this test might help you find clarity."
+                            .tr,
+                    onTap:
+                        () => Get.to(TestScreen(test: EatingDisorder())),
                   ),
                 ],
               ),

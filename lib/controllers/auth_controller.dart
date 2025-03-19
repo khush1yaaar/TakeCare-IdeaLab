@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -66,9 +68,21 @@ class AuthController extends GetxController {
 
     final userDoc = _firestore.collection('users').doc(currentUser.uid);
 
-    await userDoc.update({
-      'journal.$date': entry,
-    });
+    await userDoc.update({'journal.$date': entry});
+  }
+
+  Future<void> storeReport(
+    String userId,
+    String testName,
+    Map<String, dynamic> report,
+  ) async {
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'reports.$testName': report,
+      });
+    } catch (e) {
+      print('Error storing report: $e');
+    }
   }
 
   Future<void> logout() async {

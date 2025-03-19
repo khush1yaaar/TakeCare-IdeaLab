@@ -17,7 +17,6 @@ class _PastReportsScreenState extends State<PastReportsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Past Reports')),
       body: FutureBuilder<DocumentSnapshot>(
         future:
             _firestore.collection('users').doc(_auth.currentUser?.uid).get(),

@@ -1,11 +1,14 @@
 import 'package:get/get_utils/get_utils.dart';
 
 class EatingDisorder {
+  String name = "Eating Disorder";
+
   List<String> questions = [
     "Am terrified about being overweight?".tr,
     "Avoid eating when I am hungry?".tr,
     "Find myself preoccupied with food?".tr,
-    "Have gone on eating binges where I feel that I may not be able to stop?".tr,
+    "Have gone on eating binges where I feel that I may not be able to stop?"
+        .tr,
     "Cut my food into small pieces?".tr,
     "Aware of the calorie content of foods that I eat?".tr,
     "Particularly avoid food with a high carbohydrate content?".tr,
@@ -39,7 +42,7 @@ class EatingDisorder {
     "Never".tr,
   ];
 
-  static Map<String, dynamic> generateReport(List<int> responses) {
+  Map<String, dynamic> generateReport(List<int> responses) {
     if (responses.length != 26) {
       throw ArgumentError("Invalid number of responses. Expected 26.");
     }
@@ -51,14 +54,15 @@ class EatingDisorder {
 
     String severity;
     if (totalScore >= 20) {
-      severity = "High likelihood of an eating disorder: Professional consultation is strongly recommended.".tr;
+      severity =
+          "High likelihood of an eating disorder: Professional consultation is strongly recommended."
+              .tr;
     } else {
-      severity = "Low likelihood of an eating disorder: No immediate concerns, but self-awareness is important.".tr;
+      severity =
+          "Low likelihood of an eating disorder: No immediate concerns, but self-awareness is important."
+              .tr;
     }
 
-    return {
-      "severity": severity,
-      "totalScore": totalScore,
-    };
+    return {"severity": severity, "totalScore": totalScore};
   }
 }
