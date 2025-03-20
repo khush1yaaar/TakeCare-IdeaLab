@@ -61,9 +61,9 @@ class PetController extends GetxController with GetTickerProviderStateMixin {
   }
 
   void blink() async {
-  blinkController.forward().then((_) => blinkController.reverse());
-  await Future.delayed(Duration(milliseconds: 300));
-}
+    blinkController.forward().then((_) => blinkController.reverse());
+    await Future.delayed(Duration(milliseconds: 300));
+  }
 
 
   void flapWings() async {

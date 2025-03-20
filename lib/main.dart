@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:takecare/controllers/auth_controller.dart';
 import 'package:takecare/controllers/language_controller.dart';
+import 'package:takecare/controllers/notification_controller.dart';
 import 'package:takecare/controllers/pet_controller.dart';
 import 'package:takecare/screens/getstarted_screen.dart';
 import 'package:takecare/screens/bottom_nav_bar.dart';
@@ -14,9 +15,12 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  NotificationController().initNotification();
   Get.put(LanguageController());
   Get.put(AuthController());
   Get.put(PetController());
+  
   runApp(MyApp());
 }
 

@@ -56,7 +56,9 @@ class _JournalScreenState extends State<JournalScreen> {
               future: fetchJournalEntries(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: CircularProgressIndicator(
+                    color: theme.primaryColor,
+                  ));
                 }
 
                 final journalEntries = snapshot.data ?? [];

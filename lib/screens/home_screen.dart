@@ -1,6 +1,7 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
+import "package:takecare/controllers/notification_controller.dart";
 import "package:takecare/screens/test_screen.dart";
 import "package:takecare/utils/self_assessment_tests/adhd.dart";
 import "package:takecare/utils/self_assessment_tests/anxiety.dart";
@@ -16,7 +17,21 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: 70, right: 10),
+        child: FloatingActionButton(
+          onPressed: () {
+            NotificationController().showNotification(
+              title: "Hi, I'm Pookie",
+              body: "How are you doing today",
+            );
+          },
+          backgroundColor: theme.primaryColor,
+          child: Icon(Icons.notification_add_outlined, color: Colors.white),
+        ),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,10 +81,9 @@ class HomeScreen extends StatelessWidget {
                     subtitle:
                         "Do thoughts about food, weight, or control dominate your mind? If eating feels more like a battle, this test might help you find clarity."
                             .tr,
-                    onTap:
-                        () => Get.to(TestScreen(test: EatingDisorder())),
+                    onTap: () => Get.to(TestScreen(test: EatingDisorder())),
                   ),
-                  SizedBox(height: 80,)
+                  SizedBox(height: 80),
                 ],
               ),
             ),
