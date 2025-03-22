@@ -23,11 +23,21 @@ class HomeScreen extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 70, right: 10),
         child: FloatingActionButton(
           onPressed: () {
-            NotificationController().showNotification(
+            final controller = NotificationController();
+            //await controller.initNotification();
+            controller.scheduleNotification(
               title: "Hi, I'm Pookie",
-              body: "How are you doing today",
+              body: "How are you doing today?",
+              hour: 16,
+              minute: 34,
             );
+
+            // controller.showNotification(
+            //   title: "Hi, I'm Pookie",
+            //   body: "How are you doing today?",
+            // );
           },
+
           backgroundColor: theme.primaryColor,
           child: Icon(Icons.notification_add_outlined, color: Colors.white),
         ),

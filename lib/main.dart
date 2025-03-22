@@ -16,7 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  NotificationController().initNotification();
+  await NotificationController().initNotification();
   Get.put(LanguageController());
   Get.put(AuthController());
   Get.put(PetController());
