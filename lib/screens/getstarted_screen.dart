@@ -2,6 +2,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:takecare/controllers/auth_controller.dart';
+import 'package:takecare/controllers/notification_controller.dart';
 import 'package:takecare/screens/bottom_nav_bar.dart';
 
 class GetStartedScreen extends StatefulWidget {
@@ -56,58 +57,97 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Obx(() => _authController.isLoading.value
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
-              children: [
-                Expanded(
-                  child: SizedBox(
-                    height: 100,
-                    child: PageView(
-                      controller: _controller,
-                      children: _pages,
-                      onPageChanged: (index) {
-                        setState(() {
-                          _currentPage = index;
-                        });
+      body: Obx(
+        () =>
+            _authController.isLoading.value
+                ? const Center(child: CircularProgressIndicator())
+                : Column(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: 100,
+                        child: PageView(
+                          controller: _controller,
+                          children: _pages,
+                          onPageChanged: (index) {
+                            setState(() {
+                              _currentPage = index;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    DotsIndicator(
+                      dotsCount: _pages.length,
+                      position: _currentPage,
+                      decorator: DotsDecorator(
+                        size: const Size.square(9.0),
+                        activeSize: const Size(18.0, 9.0),
+                        activeShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        activeColor: const Color.fromARGB(255, 27, 132, 219),
+                      ),
+                    ),
+                    const SizedBox(height: 50),
+                    const Text(
+                      'Ready to feel better?',
+                      style: TextStyle(color: Colors.blueGrey, fontSize: 15),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue.shade100,
+                      ),
+                      onPressed: () async {
+                        await _authController.loginWithGoogle();
+                        Get.offAll(() => BottomNavBar());
+                        NotificationController.scheduleDailyNotification(
+                          "Take a deep breath...",
+                          "Now tell me, what’s on your mind",
+                          10,
+                          00,
+                        );
+                        NotificationController.scheduleDailyNotification(
+                          "Do you have 3 minutes?",
+                          "pookie wants to know about your day",
+                          12,
+                          30,
+                        );
+                        NotificationController.scheduleDailyNotification(
+                          "A little kindness for your mind",
+                          "—let’s chat! 💌",
+                          16,
+                          00,
+                        );
+                        NotificationController.scheduleDailyNotification(
+                          "Tap in for a midnight thought dump",
+                          "—it helps! 🌜",
+                          22,
+                          00,
+                        );
+                        NotificationController.scheduleDailyNotification(
+                          "🚽 Can you Multi task?",
+                          "it take just 5 minutes to take a test...",
+                          8,
+                          00,
+                        );
                       },
+                      icon: Image.asset(
+                        'lib/images/google_logo.png',
+                        height: 24,
+                      ),
+                      label: const Text(
+                        'Sign in with Google',
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 40),
+                    const SizedBox(height: 50),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                DotsIndicator(
-                  dotsCount: _pages.length,
-                  position: _currentPage,
-                  decorator: DotsDecorator(
-                    size: const Size.square(9.0),
-                    activeSize: const Size(18.0, 9.0),
-                    activeShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    activeColor: const Color.fromARGB(255, 27, 132, 219),
-                  ),
-                ),
-                const SizedBox(height: 50),
-                const Text(
-                  'Ready to feel better?',
-                  style: TextStyle(color: Colors.blueGrey, fontSize: 15),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue.shade100,
-                  ),
-                  onPressed: () async {
-                    await _authController.loginWithGoogle();
-                    Get.offAll(() => BottomNavBar());
-                                    },
-                  icon: Image.asset('lib/images/google_logo.png', height: 24),
-                  label: const Text('Sign in with Google', style: TextStyle(fontSize: 16, color: Colors.black)),
-                ),
-                const SizedBox(height: 40),
-                const SizedBox(height: 50),
-              ],
-            )),
+      ),
     );
   }
 }

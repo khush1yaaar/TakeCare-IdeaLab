@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:takecare/controllers/auth_controller.dart';
 import 'package:takecare/controllers/language_controller.dart';
 import 'package:takecare/controllers/notification_controller.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:takecare/controllers/pet_controller.dart';
 import 'package:takecare/screens/getstarted_screen.dart';
 import 'package:takecare/screens/bottom_nav_bar.dart';
@@ -16,11 +17,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  await NotificationController().initNotification();
+  await NotificationController.init();
+  tz.initializeTimeZones();
+  
   Get.put(LanguageController());
   Get.put(AuthController());
   Get.put(PetController());
-  
+
   runApp(MyApp());
 }
 
