@@ -44,7 +44,7 @@ class PastReportCard extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                test,
+                test.tr,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -59,7 +59,7 @@ class PastReportCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Check Report",
+                  "Check Report".tr,
                   style: TextStyle(
                     fontSize: 14,
                     // ignore: deprecated_member_use

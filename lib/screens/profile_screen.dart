@@ -96,13 +96,13 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     Obx(
                       () => SettingsCard(
-                        title: "Language",
+                        title: "Language".tr,
                         currentSetting: controller.currentLanguage.value,
                         onTap: () => LanguagePopup.show(context, languages),
                       ),
                     ),
                     SettingsCard(
-                      title: "Past Reports",
+                      title: "Past Reports".tr,
                       currentSetting: "View History",
                       onTap: () {
                         Get.to(PastReportsScreen());

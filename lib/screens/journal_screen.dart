@@ -47,7 +47,7 @@ class _JournalScreenState extends State<JournalScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 30.0, left: 20),
             child: Text(
-              'How was your day?',
+              'How was your day?'.tr,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
           ),

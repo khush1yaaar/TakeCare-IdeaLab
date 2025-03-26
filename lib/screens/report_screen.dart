@@ -60,7 +60,6 @@ class _ReportScreenState extends State<ReportScreen> {
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 16,
-                                  color: Colors.black54,
                                 ),
                               ),
                             ],

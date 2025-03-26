@@ -97,6 +97,132 @@ class HindiTranslations extends Translations {
       "Eating Disorder Test": "Eating Disorder परीक्षण",
       "Do thoughts about food, weight, or control dominate your mind? If eating feels more like a battle, this test might help you find clarity.":
           "क्या भोजन, वजन या नियंत्रण के बारे में विचार आपके दिमाग पर हावी हैं? यदि खाने का अनुभव संघर्ष जैसा लगता है, तो यह परीक्षण आपको स्पष्टता प्राप्त करने में मदद कर सकता है।",
+
+      'Little interest or pleasure in doing things?':
+          'क्या चीज़ों में कम रुचि या आनंद महसूस हो रहा है?',
+      'Feeling down, depressed, or hopeless?':
+          'क्या आप उदास, निराश या हताश महसूस कर रहे हैं?',
+      'Trouble falling or staying asleep, or sleeping too much?':
+          'क्या आपको सोने में परेशानी हो रही है या बहुत अधिक सो रहे हैं?',
+      'Feeling tired or having little energy?':
+          'क्या आप थका हुआ या ऊर्जा की कमी महसूस कर रहे हैं?',
+      'Poor appetite or overeating?':
+          'क्या आपकी भूख कम हो गई है या आप ज़रूरत से ज़्यादा खा रहे हैं?',
+      'Feeling bad about yourself or that you are a failure?':
+          'क्या आप अपने बारे में बुरा महसूस कर रहे हैं या खुद को असफल मानते हैं?',
+      'Trouble concentrating on things, such as reading or watching TV?':
+          'क्या आपको चीज़ों पर ध्यान केंद्रित करने में परेशानी हो रही है, जैसे कि पढ़ाई या टीवी देखना?',
+      'Moving or speaking so slowly that others have noticed? Or being fidgety and restless?':
+          'क्या आप इतनी धीरे-धीरे चल या बोल रहे हैं कि दूसरों ने ध्यान दिया? या बेचैन और व्यग्र महसूस कर रहे हैं?',
+      'Thoughts that you would be better off dead or hurting yourself?':
+          'क्या आपके मन में यह विचार आ रहे हैं कि मर जाना या खुद को चोट पहुँचाना बेहतर होगा?',
+
+      'Not at all': 'बिल्कुल नहीं',
+      'Several days': 'कुछ दिन',
+      'More than half the days': 'आधे से अधिक दिन',
+      'Nearly every day': 'लगभग हर दिन',
+
+      'Feeling nervous, anxious, or on edge?':
+          'क्या आप घबराए हुए, चिंतित या बेचैन महसूस कर रहे हैं?',
+      'Not being able to stop or control worrying?':
+          'क्या आप अपनी चिंता को रोक या नियंत्रित नहीं कर पा रहे हैं?',
+      'Worrying too much about different things?':
+          'क्या आप अलग-अलग चीजों के बारे में बहुत अधिक चिंतित रहते हैं?',
+      'Trouble relaxing?': 'क्या आपको आराम करने में परेशानी हो रही है?',
+      'Being so restless that it is hard to sit still?':
+          'क्या आप इतने बेचैन हैं कि एक जगह स्थिर बैठना मुश्किल है?',
+      'Becoming easily annoyed or irritable?':
+          'क्या आप आसानी से चिढ़ जाते हैं या चिड़चिड़े हो जाते हैं?',
+      'Feeling afraid, as if something awful might happen?':
+          'क्या आपको ऐसा डर लग रहा है जैसे कुछ बुरा होने वाला हो?',
+
+      'Elevated Mood?': 'क्या आपका मूड सामान्य से अधिक ऊंचा महसूस हो रहा है?',
+      'Increased Motor Activity-Energy?':
+          'क्या आपकी शारीरिक गतिविधि या ऊर्जा बढ़ गई है?',
+      'Sexual Interest?': 'क्या आपकी यौन रुचि में बदलाव आया है?',
+      'Sleep disturbance?': 'क्या आपकी नींद में कोई गड़बड़ी हो रही है?',
+      'Irritability?': 'क्या आप चिड़चिड़े महसूस कर रहे हैं?',
+      'Speech (Rate and Amount)?':
+          'क्या आपकी बोलने की गति और मात्रा में बदलाव आया है?',
+      'Language-Thought Disorder?':
+          'क्या आपको भाषा या विचारों में कोई असामान्यता महसूस हो रही है?',
+      'Content (Delusions, Grandiosity, etc.)?':
+          'क्या आपको भ्रम, भव्यता आदि का अनुभव हो रहा है?',
+      'Disruptive-Aggressive Behavior?':
+          'क्या आपका व्यवहार आक्रामक या विघटनकारी हो गया है?',
+      'Appearance (Grooming and Dress)?':
+          'क्या आपकी सफाई और कपड़ों में बदलाव आया है?',
+      'Insight (Awareness of condition)?': 'क्या आपको अपनी स्थिति की समझ है?',
+
+      'Absent': 'अनुपस्थित',
+      'Mild': 'हल्का',
+      'Moderate': 'मध्यम',
+      'Severe': 'गंभीर',
+      'Extreme': 'अत्यधिक',
+
+      'Am terrified about being overweight?':
+          'क्या मैं अधिक वजन होने को लेकर बहुत डरता/डरती हूं?',
+      'Avoid eating when I am hungry?':
+          'क्या मैं भूखा होने पर भी खाने से बचता/बचती हूं?',
+      'Find myself preoccupied with food?':
+          'क्या मेरा दिमाग लगातार खाने के बारे में सोचता रहता है?',
+      'Have gone on eating binges where I feel that I may not be able to stop?':
+          'क्या मैं कभी इतना खा लेता/लेती हूं कि रुकना मुश्किल लगता है?',
+      'Cut my food into small pieces?':
+          'क्या मैं अपने खाने को छोटे-छोटे टुकड़ों में काटता/काटती हूं?',
+      'Aware of the calorie content of foods that I eat?':
+          'क्या मुझे अपने खाने में कैलोरी की मात्रा की जानकारी रहती है?',
+      'Particularly avoid food with a high carbohydrate content?':
+          'क्या मैं खासतौर पर अधिक कार्बोहाइड्रेट वाले खाने से बचता/बचती हूं?',
+      'Feel that others would prefer if I ate more?':
+          'क्या मुझे लगता है कि दूसरे चाहेंगे कि मैं अधिक खाऊं?',
+      'Vomit after I have eaten?':
+          'क्या मैं खाने के बाद उल्टी कर देता/देती हूं?',
+      'Feel extremely guilty after eating?':
+          'क्या मैं खाने के बाद अत्यधिक दोषी महसूस करता/करती हूं?',
+      'Am preoccupied with a desire to be thinner?':
+          'क्या मैं हमेशा पतला होने की इच्छा से ग्रस्त रहता/रहती हूं?',
+      'Think about burning up calories when I exercise?':
+          'क्या मैं व्यायाम के दौरान कैलोरी जलाने के बारे में सोचता/सोचती हूं?',
+      'Other people think that I am too thin?':
+          'क्या दूसरे लोग सोचते हैं कि मैं बहुत पतला/पतली हूं?',
+      'Am preoccupied with the thought of having fat on my body?':
+          'क्या मैं अपने शरीर पर चर्बी होने के विचार से परेशान रहता/रहती हूं?',
+      'Take longer than others to eat my meals?':
+          'क्या मैं दूसरों की तुलना में अधिक समय लेकर भोजन करता/करती हूं?',
+      'Avoid foods with sugar in them?':
+          'क्या मैं चीनी वाले खाद्य पदार्थों से बचता/बचती हूं?',
+      'Eat diet foods?': 'क्या मैं विशेष रूप से डाइट फूड खाता/खाती हूं?',
+      'Feel that food controls my life?':
+          'क्या मुझे लगता है कि भोजन मेरी ज़िंदगी को नियंत्रित कर रहा है?',
+      'Display self-control around food?':
+          'क्या मैं खाने को लेकर आत्म-नियंत्रण दिखाता/दिखाती हूं?',
+      'Feel that others pressure me to eat?':
+          'क्या मुझे लगता है कि दूसरे मुझ पर खाने का दबाव डालते हैं?',
+      'Give too much time and thought to food?':
+          'क्या मैं खाने के बारे में बहुत अधिक समय और विचार देता/देती हूं?',
+      'Feel uncomfortable after eating sweets?':
+          'क्या मैं मिठाई खाने के बाद असहज महसूस करता/करती हूं?',
+      'Engage in dieting behavior?':
+          'क्या मैं डाइटिंग करने की आदत में लगा/लगी हूं?',
+      'Like my stomach to be empty?': 'क्या मुझे अपना पेट खाली रखना पसंद है?',
+      'Have the impulse to vomit after meals?':
+          'क्या मुझे भोजन के बाद उल्टी करने की इच्छा होती है?',
+      'Enjoy trying new rich foods?':
+          'क्या मुझे नए समृद्ध (तैलीय/मसालेदार) भोजन आज़माना पसंद है?',
+
+      'Always': 'हमेशा',
+      'Usually': 'अधिकतर',
+      'How was your day?': 'आपका दिन कैसा रहा?',
+
+      'Check Report': 'रिपोर्ट जांचें',
+
+      'Past Reports': 'पिछली रिपोर्टें',
+
+      'Language': 'भाषा',
+
+      'View History': 'इतिहास देखें',
+
     },
   };
 }
