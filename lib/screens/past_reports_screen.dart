@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:takecare/screens/home_screen.dart';
+import 'package:takecare/widgets/button.dart';
 import 'package:takecare/widgets/cards/past_report_card.dart';
 
 class PastReportsScreen extends StatefulWidget {
@@ -31,29 +34,54 @@ class _PastReportsScreenState extends State<PastReportsScreen> {
           Expanded(
             child: FutureBuilder<DocumentSnapshot>(
               future:
-                  _firestore.collection('users').doc(_auth.currentUser?.uid).get(),
+                  _firestore
+                      .collection('users')
+                      .doc(_auth.currentUser?.uid)
+                      .get(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
-            
+
                 if (!snapshot.hasData || !snapshot.data!.exists) {
                   return const Center(
-                    child: Text('No reports yet', style: TextStyle(fontSize: 18)),
+                    child: Text(
+                      'No reports yet',
+                      style: TextStyle(fontSize: 18),
+                    ),
                   );
                 }
-            
+
                 Map<String, dynamic> data =
                     snapshot.data!.data() as Map<String, dynamic>;
                 Map<String, dynamic>? reports =
                     data['reports'] as Map<String, dynamic>?;
-            
+
                 if (reports == null || reports.isEmpty) {
-                  return const Center(
-                    child: Text('No reports yet', style: TextStyle(fontSize: 18)),
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "No Reports yet",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                  
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Button(
+                          text: "Take tests ?",
+                          onPressed: () {
+                            Get.to(HomeScreen());
+                          },
+                        ),
+                      ),
+                    ],
                   );
                 }
-            
+
                 return ListView.builder(
                   padding: const EdgeInsets.all(16),
                   itemCount: reports.length,

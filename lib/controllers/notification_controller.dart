@@ -1,4 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:takecare/screens/bottom_nav_bar.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationController {
@@ -8,7 +10,7 @@ class NotificationController {
     NotificationResponse notificationResponse,
   ) async {
     print("Notification clicked: ${notificationResponse.payload}");
-    // You can navigate to a screen or show a dialog when the notification is clicked
+    Get.to(BottomNavBar());
   }
 
   static Future<void> init() async {
@@ -88,7 +90,7 @@ class NotificationController {
     );
 
     await flutterLocalNotificationsPlugin.zonedSchedule(
-      DateTime.now().millisecondsSinceEpoch % 100000, // Unique ID
+      0, // Unique ID
       title,
       body,
       scheduledDate,

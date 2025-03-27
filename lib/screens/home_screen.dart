@@ -1,7 +1,6 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
-import "package:takecare/controllers/notification_controller.dart";
 import "package:takecare/screens/test_screen.dart";
 import "package:takecare/utils/self_assessment_tests/adhd.dart";
 import "package:takecare/utils/self_assessment_tests/anxiety.dart";
@@ -17,29 +16,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 70, right: 10),
-        child: FloatingActionButton(
-          onPressed: () {
-            NotificationController.showInstantNotification(
-              "instant notification",
-              "please may the scheduled notification work",
-            );
-
-            NotificationController.scheduleDailyNotification(
-              "Daily Reminder",
-              "This is your daily notification!",
-              23, 
-              45,
-            );
-          },
-
-          backgroundColor: theme.primaryColor,
-          child: Icon(Icons.notification_add_outlined, color: Colors.white),
-        ),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

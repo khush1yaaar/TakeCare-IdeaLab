@@ -117,13 +117,13 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                         );
                         NotificationController.scheduleDailyNotification(
                           "A little kindness for your mind",
-                          "—let’s chat! 💌",
+                          "—let's chat! 💌",
                           16,
                           00,
                         );
                         NotificationController.scheduleDailyNotification(
                           "Tap in for a midnight thought dump",
-                          "—it helps! 🌜",
+                          "— it helps! 🌜",
                           22,
                           00,
                         );
