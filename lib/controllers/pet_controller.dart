@@ -4,10 +4,12 @@ import 'dart:async';
 
 class PetController extends GetxController with GetTickerProviderStateMixin {
   late AnimationController nodController;
-   late AnimationController blinkController;
+  late AnimationController blinkController;
   late AnimationController moveController;
   late AnimationController flapController;
   late AnimationController blushController;
+  late Animation<double> leftEyeBlink;
+  late Animation<double> rightEyeBlink;
 
   var isNodding = false.obs;
   var isBlinking = false.obs;
@@ -25,8 +27,27 @@ class PetController extends GetxController with GetTickerProviderStateMixin {
     );
     blinkController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 400),
+      duration: Duration(milliseconds: 150),
     );
+
+    // Curved blink animations (0 = open, 1 = closed)
+    leftEyeBlink = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: blinkController,
+        curve: Curves.easeInOut,
+      ),
+    );
+    
+    rightEyeBlink = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: blinkController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    // Auto-blink every few seconds
+    Timer.periodic(Duration(seconds: 3), (_) => blink());
+
     moveController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 700),
@@ -61,8 +82,11 @@ class PetController extends GetxController with GetTickerProviderStateMixin {
   }
 
   void blink() async {
-    blinkController.forward().then((_) => blinkController.reverse());
-    await Future.delayed(Duration(milliseconds: 300));
+    if (isBlinking.value) return;
+    isBlinking.value = true;
+    await blinkController.forward();
+    await blinkController.reverse();
+    isBlinking.value = false;
   }
 
 

@@ -1,173 +1,134 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:intl/intl.dart';
 import 'package:takecare/controllers/pet_controller.dart';
+import 'package:takecare/widgets/constants.dart';
 import 'package:takecare/widgets/message.dart';
 import 'package:takecare/widgets/pet.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class ChatBotScreen extends StatefulWidget {
-  const ChatBotScreen({super.key});
-
   @override
-  State<ChatBotScreen> createState() => _ChatBotScreenState();
+  _ChatBotScreenState createState() => _ChatBotScreenState();
 }
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
-  final PetController petController = Get.find<PetController>();
-  final TextEditingController _messageController = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
-
-  List<Map<String, String>> chatMessages = [
-    {"role": "system", "content": "Hi, I am pookie"},
-  ];
-
-  Future<void> query(String prompt) async {
-    setState(() {
-      chatMessages.add({"role": "user", "content": prompt});
-    });
-
-    final data = {"model": "llama3", "messages": chatMessages, "stream": false};
-
-    try {
-      final response = await http.post(
-        Uri.parse("http://192.168.1.100:11434/api/chat"),
-        headers: {"Content-Type": "application/json"},
-        body: json.encode(data),
-      );
-
-      print("Response status: ${response.statusCode}");
-      print("Response body: ${response.body}");
-
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-        print("Decoded response: $responseData");
-
-        String aiResponse = "";
-        if (responseData.containsKey("message") &&
-            responseData["message"] is Map &&
-            responseData["message"].containsKey("content")) {
-          aiResponse = responseData["message"]["content"];
-        } else if (responseData.containsKey("content")) {
-          aiResponse = responseData["content"];
-        }
-
-        if (aiResponse.trim().isEmpty) {
-          aiResponse = "I'm here to support you. How are you feeling?";
-        }
-
-        setState(() {
-          chatMessages.add({"role": "assistant", "content": aiResponse});
-        });
-      } else {
-        print("Server error: ${response.statusCode} - ${response.body}");
-      }
-    } catch (e) {
-      print("Network error: $e");
-    }
-  }
+  final TextEditingController _userInput = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  final PetController _petController = Get.find();
+  late String apiKey;
+  late GenerativeModel model;
+  bool isPetTalking = false; // Controls animation
 
   @override
   void initState() {
     super.initState();
-    _focusNode.addListener(() {
-      setState(() {});
-    });
+    apiKey = Constants.apikey;
+    model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
   }
 
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
+  final List<Message> _messages = [];
+
+  Future<void> sendMessage() async {
+    final message = _userInput.text;
+    setState(() {
+      _messages.add(
+        Message(isUser: true, message: message, date: DateTime.now()),
+      );
+      _userInput.clear();
+      isPetTalking = true; // Pet starts reacting
+    });
+
+    final content = [Content.text("$message ${Constants.prompt}")];
+    final response = await model.generateContent(content);
+
+    setState(() {
+      _messages.add(
+        Message(
+          isUser: false,
+          message: response.text ?? "",
+          date: DateTime.now(),
+        ),
+      );
+      isPetTalking = false; // Pet stops reacting
+    });
+    _scrollToBottom();
+  }
+
+  void _scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue.shade50,
-      body: Stack(
-        children: [
-          Positioned(
-            top: 200,
-            left: 50,
-            child: GestureDetector(
-              onTap: () {
-                petController.smile();
-                petController.flapWings();
-              },
-              child: Pet(),
-            ),
-          ),
-          Positioned.fill(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 80),
-              child: ListView.builder(
-                itemCount: chatMessages.length,
-                padding: const EdgeInsets.all(10),
-                itemBuilder: (context, index) {
-                  final message = chatMessages[index];
-                  return Message(
-                    message: message["content"]!,
-                    isUserMessage: message["role"] == "user",
-                  );
-                },
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 20,
-            left: 0,
-            right: 0,
-            child: _buildMessageInputField(),
-          ),
-        ],
-      ),
-    );
-  }
+    final theme = Theme.of(context);
 
-  Widget _buildMessageInputField() {
-    return Padding(
-      padding:
-          _focusNode.hasFocus
-              ? EdgeInsets.zero
-              : const EdgeInsets.only(bottom: 70.0, left: 5, right: 5),
-      child: Row(
+    return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        title: Text(
+          'Chat with Your Pet',
+          style: TextStyle(
+            color: theme.appBarTheme.backgroundColor,
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: Column(
         children: [
           Expanded(
-            child: TextField(
-              controller: _messageController,
-              focusNode: _focusNode,
-              decoration: InputDecoration(
-                hintText: "Type your message...",
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25),
-                  borderSide: BorderSide.none,
+            child: Column(
+              children: [
+                SizedBox(height: 10),
+                GestureDetector(
+                  onTap: () {
+                    _petController.flapWings();
+                  },
+                  child: Pet(),
                 ),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
+                Expanded(
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    itemCount: _messages.length,
+                    itemBuilder: (context, index) {
+                      final message = _messages[index];
+                      return Messages(
+                        isUser: message.isUser,
+                        message: message.message,
+                        date: DateFormat('HH:mm').format(message.date),
+                      );
+                    },
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
-          const SizedBox(width: 10),
-          Container(
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.blue,
-            ),
-            child: IconButton(
-              icon: const Icon(Icons.send, color: Colors.white),
-              onPressed: () {
-                if (_messageController.text.trim().isNotEmpty) {
-                  print("Sending message: ${_messageController.text.trim()}");
-                  query(_messageController.text.trim());
-                  petController.nod();
-                  _messageController.clear();
-                }
-              },
+          Padding(
+            padding: const EdgeInsets.only(bottom: 70.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _userInput,
+                    decoration: InputDecoration(
+                      hintText: 'Ask your pet anything...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.send, color: Colors.blue),
+                  onPressed: sendMessage,
+                ),
+              ],
             ),
           ),
         ],

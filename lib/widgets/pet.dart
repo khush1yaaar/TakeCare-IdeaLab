@@ -167,62 +167,16 @@ class Pet extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            AnimatedOpacity(
-                              opacity: controller.isBlinking.value ? 0.0 : 1.0,
-                              duration: Duration(milliseconds: 100),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 1,
-                                    left: 5,
-                                    child: Container(
-                                      width: 3,
-                                      height: 3,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            // Left eye
+                            AnimatedEye(
+                              blinkAnimation: controller.leftEyeBlink,
+                              isLeftEye: true,
                             ),
                             SizedBox(width: 15),
-                            AnimatedOpacity(
-                              opacity: controller.isBlinking.value ? 0.0 : 1.0,
-                              duration: Duration(milliseconds: 100),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 1,
-                                    left: 5,
-                                    child: Container(
-                                      width: 3,
-                                      height: 3,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            // Right eye
+                            AnimatedEye(
+                              blinkAnimation: controller.rightEyeBlink,
+                              isLeftEye: false,
                             ),
                           ],
                         ),
@@ -308,5 +262,106 @@ class Pet extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class AnimatedEye extends StatelessWidget {
+  final Animation<double> blinkAnimation;
+  final bool isLeftEye;
+
+  const AnimatedEye({
+    required this.blinkAnimation,
+    this.isLeftEye = false,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: blinkAnimation,
+      builder: (context, child) {
+        return CustomPaint(
+          size: Size(15, 15),
+          painter: EyePainter(
+            blinkProgress: blinkAnimation.value,
+            isLeftEye: isLeftEye,
+          ),
+        );
+      },
+    );
+  }
+}
+
+class EyePainter extends CustomPainter {
+  final double blinkProgress;
+  final bool isLeftEye;
+
+  EyePainter({required this.blinkProgress, required this.isLeftEye});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final eyePaint =
+        Paint()
+          ..color = Colors.black
+          ..style = PaintingStyle.fill;
+
+    final highlightPaint =
+        Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill;
+
+    final center = Offset(size.width / 2, size.height / 2);
+    final eyeRadius = size.width / 2;
+
+    // Draw eye (always visible)
+    canvas.drawCircle(center, eyeRadius, eyePaint);
+
+    // Draw highlight (only when eye is open)
+    if (blinkProgress < 0.7) {
+      canvas.drawCircle(
+        Offset(center.dx + eyeRadius * 0.3, center.dy - eyeRadius * 0.3),
+        eyeRadius * 0.3,
+        highlightPaint,
+      );
+    }
+
+    // Draw eyelid (curved)
+    final eyelidPath = Path();
+    final eyelidHeight = size.height * blinkProgress;
+
+    if (isLeftEye) {
+      eyelidPath.moveTo(0, size.height / 2);
+      eyelidPath.quadraticBezierTo(
+        size.width / 2,
+        size.height / 2 - eyelidHeight * 2,
+        size.width,
+        size.height / 2,
+      );
+    } else {
+      eyelidPath.moveTo(size.width, size.height / 2);
+      eyelidPath.quadraticBezierTo(
+        size.width / 2,
+        size.height / 2 - eyelidHeight * 2,
+        0,
+        size.height / 2,
+      );
+    }
+
+    eyelidPath.lineTo(size.width, size.height / 2);
+    eyelidPath.close();
+
+    canvas.drawPath(
+      eyelidPath,
+      Paint()
+        ..color =
+            Colors
+                .white // Match your pet's face color
+        ..style = PaintingStyle.fill,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant EyePainter oldDelegate) {
+    return blinkProgress != oldDelegate.blinkProgress;
   }
 }
