@@ -47,33 +47,12 @@ class _JournalScreenState extends State<JournalScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FutureBuilder<List<Map<String, dynamic>>>(
-            future: fetchJournalEntries(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(color: theme.primaryColor),
-                );
-              }
-
-              final journalEntries = snapshot.data ?? [];
-              bool isJournalEmpty = journalEntries.isEmpty;
-
-              return Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30.0, left: 20),
-                    child: Text(
-                      'How was your day?'.tr,
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
+          Padding(
+            padding: const EdgeInsets.only(top: 30.0, left: 20),
+            child: Text(
+              'How was your day?'.tr,
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
           ),
           Expanded(
             child: FutureBuilder<List<Map<String, dynamic>>>(
