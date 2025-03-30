@@ -8,7 +8,10 @@ import 'package:takecare/widgets/message.dart';
 import 'package:takecare/widgets/pet.dart';
 
 class ChatBotScreen extends StatefulWidget {
+  const ChatBotScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ChatBotScreenState createState() => _ChatBotScreenState();
 }
 
@@ -18,7 +21,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   final PetController _petController = Get.find();
   late String apiKey;
   late GenerativeModel model;
-  bool isPetTalking = false; // Controls animation
+  bool isPetTalking = false;
 
   @override
   void initState() {
@@ -39,10 +42,15 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
       isPetTalking = true; // Pet starts reacting
     });
 
-    final content = [Content.text("$message ${Constants.prompt}")];
+    final content = [
+      Content.text(
+        "Users message : $message, your prompt : ${Constants.prompt}",
+      ),
+    ];
     final response = await model.generateContent(content);
 
     setState(() {
+      _petController.nod();
       _messages.add(
         Message(
           isUser: false,
@@ -50,7 +58,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
           date: DateTime.now(),
         ),
       );
-      isPetTalking = false; // Pet stops reacting
+      isPetTalking = false;
     });
     _scrollToBottom();
   }
@@ -66,73 +74,116 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final bottomPadding =
+        MediaQuery.of(context).viewInsets.bottom; // Keyboard height
+    final curvedNavBarHeight = 65;
 
-    return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        title: Text(
-          'Chat with Your Pet',
-          style: TextStyle(
-            color: theme.appBarTheme.backgroundColor,
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Image.asset(
+            "lib/images/chat_screen_background1.jpeg",
+            fit: BoxFit.cover,
           ),
         ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                SizedBox(height: 10),
-                GestureDetector(
+        Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: Colors.transparent,
+          body: Stack(
+            children: [
+              Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10),
+                        Expanded(
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            itemCount: _messages.length,
+                            itemBuilder: (context, index) {
+                              final message = _messages[index];
+                              return Messages(
+                                isUser: message.isUser,
+                                message: message.message,
+                                date: DateFormat(
+                                  'HH:mm',
+                                ).format(message.date),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 120),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom:
+                          bottomPadding > 0
+                              ? bottomPadding +
+                                  10 // Keyboard open: 10px above keyboard
+                              : curvedNavBarHeight + 10,
+                      left: 10,
+                      right: 10,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _userInput,
+                            cursorColor: theme.primaryColor,
+                            decoration: InputDecoration(
+                              hintText: 'Ask your pet anything...',
+                              hintStyle: TextStyle(color: Colors.grey[300]),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                  color: theme.primaryColor,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                  color: theme.primaryColor,
+                                  width: 2.0,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(
+                                  color: theme.primaryColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.send, color: theme.primaryColor),
+                          onPressed: () {
+                            _petController.nod();
+                            sendMessage();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                left: 10,
+                bottom: 120,
+                child: GestureDetector(
                   onTap: () {
                     _petController.flapWings();
                   },
                   child: Pet(),
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: _messages.length,
-                    itemBuilder: (context, index) {
-                      final message = _messages[index];
-                      return Messages(
-                        isUser: message.isUser,
-                        message: message.message,
-                        date: DateFormat('HH:mm').format(message.date),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 70.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _userInput,
-                    decoration: InputDecoration(
-                      hintText: 'Ask your pet anything...',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send, color: Colors.blue),
-                  onPressed: sendMessage,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
