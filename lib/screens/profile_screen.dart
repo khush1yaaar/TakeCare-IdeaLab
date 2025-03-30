@@ -31,6 +31,7 @@ class ProfileScreen extends StatelessWidget {
               {'name': 'English', 'code': 'en', 'country': 'US'},
               {'name': 'Français', 'code': 'fr', 'country': 'FR'},
               {'name': 'हिन्दी', 'code': 'hi', 'country': 'IN'},
+              {'name': 'मराठी', 'code': 'mr', 'country': 'IN'},
             ];
 
             return CustomScrollView(
@@ -112,7 +113,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         SettingsCard(
                           title: "Past Reports".tr,
-                          currentSetting: "View History",
+                          currentSetting: "View History".tr,
                           onTap: () {
                             Get.to(PastReportsScreen());
                           },

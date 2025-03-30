@@ -11,7 +11,6 @@ class ChatBotScreen extends StatefulWidget {
   const ChatBotScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _ChatBotScreenState createState() => _ChatBotScreenState();
 }
 
@@ -39,7 +38,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
         Message(isUser: true, message: message, date: DateTime.now()),
       );
       _userInput.clear();
-      isPetTalking = true; // Pet starts reacting
+      isPetTalking = true;
     });
 
     final content = [
@@ -74,9 +73,8 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final bottomPadding =
-        MediaQuery.of(context).viewInsets.bottom; // Keyboard height
-    final curvedNavBarHeight = 65;
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    final bottomPadding = bottomInset; // keyboard height when showing.
 
     return Stack(
       children: [
@@ -96,7 +94,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                   Expanded(
                     child: Column(
                       children: [
-                        SizedBox(height: 10),
+                        SizedBox(height: 50),
                         Expanded(
                           child: ListView.builder(
                             controller: _scrollController,
@@ -106,9 +104,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                               return Messages(
                                 isUser: message.isUser,
                                 message: message.message,
-                                date: DateFormat(
-                                  'HH:mm',
-                                ).format(message.date),
+                                date: DateFormat('HH:mm').format(message.date),
                               );
                             },
                           ),
@@ -117,53 +113,55 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                     ),
                   ),
                   SizedBox(height: 120),
-                  Padding(
+                  AnimatedContainer(
+                    duration: Duration(milliseconds: 200),
                     padding: EdgeInsets.only(
-                      bottom:
-                          bottomPadding > 0
-                              ? bottomPadding +
-                                  10 // Keyboard open: 10px above keyboard
-                              : curvedNavBarHeight + 10,
                       left: 10,
                       right: 10,
+                      bottom: bottomPadding + (bottomInset == 0 ? 70 : 0),
                     ),
-                    child: Row(
+                    child: Column(
                       children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _userInput,
-                            cursorColor: theme.primaryColor,
-                            decoration: InputDecoration(
-                              hintText: 'Ask your pet anything...',
-                              hintStyle: TextStyle(color: Colors.grey[300]),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide(
-                                  color: theme.primaryColor,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide(
-                                  color: theme.primaryColor,
-                                  width: 2.0,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide(
-                                  color: theme.primaryColor,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: _userInput,
+                                cursorColor: theme.primaryColor,
+                                style: TextStyle(color: Colors.white),
+                                decoration: InputDecoration(
+                                  hintText: 'Ask your pet anything...',
+                                  hintStyle: TextStyle(color: Colors.grey[300]),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                      color: theme.primaryColor,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                      color: theme.primaryColor,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                      color: theme.primaryColor,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.send, color: theme.primaryColor),
-                          onPressed: () {
-                            _petController.nod();
-                            sendMessage();
-                          },
+                            IconButton(
+                              icon: Icon(Icons.send, color: theme.primaryColor),
+                              onPressed: () {
+                                _petController.nod();
+                                sendMessage();
+                              },
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -171,8 +169,8 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                 ],
               ),
               Positioned(
-                left: 10,
-                bottom: 120,
+                left: -20,
+                bottom: bottomPadding + 120,
                 child: GestureDetector(
                   onTap: () {
                     _petController.flapWings();
