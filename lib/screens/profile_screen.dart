@@ -28,10 +28,11 @@ class ProfileScreen extends StatelessWidget {
           body: Obx(() {
             final user = _authController.user.value;
             List<Map<String, String>> languages = [
-              {'name': 'English', 'code': 'en', 'country': 'US'},
-              {'name': 'Français', 'code': 'fr', 'country': 'FR'},
               {'name': 'हिन्दी', 'code': 'hi', 'country': 'IN'},
               {'name': 'मराठी', 'code': 'mr', 'country': 'IN'},
+              {'name': 'தமிழ்', 'code': 'ta', 'country': 'IN'},
+              {'name': 'Français', 'code': 'fr', 'country': 'FR'},
+              {'name': 'English', 'code': 'en', 'country': 'US'},
             ];
 
             return CustomScrollView(
