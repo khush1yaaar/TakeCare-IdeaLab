@@ -48,7 +48,7 @@ class Pet extends StatelessWidget {
               // Left Wing (Pivot from Top Edge)
               Positioned(
                 top: 65,
-                left: 40,
+                left: 45,
                 child: AnimatedBuilder(
                   animation: controller.flapAnimation,
                   builder: (context, child) {
@@ -59,7 +59,7 @@ class Pet extends StatelessWidget {
                       ), // Counterclockwise (-90°)
                       child: Container(
                         width: 13,
-                        height: 45,
+                        height: 50,
                         decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius: BorderRadius.horizontal(
@@ -75,7 +75,7 @@ class Pet extends StatelessWidget {
               // Right Wing (Pivot from Top Edge)
               Positioned(
                 top: 65,
-                right: 40,
+                right: 45,
                 child: AnimatedBuilder(
                   animation: controller.flapAnimation,
                   builder: (context, child) {
@@ -86,7 +86,7 @@ class Pet extends StatelessWidget {
                       ), // Clockwise (+90°)
                       child: Container(
                         width: 13,
-                        height: 45,
+                        height: 50,
                         decoration: BoxDecoration(
                           color: Colors.black,
                           borderRadius: BorderRadius.horizontal(

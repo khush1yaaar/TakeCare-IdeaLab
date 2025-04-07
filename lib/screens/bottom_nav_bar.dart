@@ -34,7 +34,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-
     final theme = Theme.of(context); 
 
     return Scaffold(

@@ -21,6 +21,8 @@ class ProfileScreen extends StatelessWidget {
     final ThemeController themeController = Get.find<ThemeController>();
     final LanguageController _languageController = Get.find();
     final PetController _petController = Get.find();
+    final theme = Theme.of(context);
+
 
     return Stack(
       children: [
@@ -60,9 +62,7 @@ class ProfileScreen extends StatelessWidget {
                 SliverToBoxAdapter(
                   child: Container(
                     color:
-                        themeController.isDarkTheme.value
-                            ? Colors.grey.shade900
-                            : Colors.white, // Dynamic background color
+                        theme.scaffoldBackgroundColor, // Dynamic background color
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

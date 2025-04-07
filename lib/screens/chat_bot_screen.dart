@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
@@ -7,6 +9,16 @@ import 'package:takecare/models/message.dart';
 import 'package:takecare/widgets/constants.dart';
 import 'package:takecare/widgets/message.dart';
 import 'package:takecare/widgets/pet.dart';
+
+class ChatBotController extends GetxController {
+  final RxDouble keyboardHeight = 0.0.obs;
+  final RxBool isKeyboardVisible = false.obs;
+
+  void updateKeyboardVisibility(double height) {
+    keyboardHeight.value = height;
+    isKeyboardVisible.value = height > 0;
+  }
+}
 
 class ChatBotScreen extends StatefulWidget {
   const ChatBotScreen({super.key});
@@ -19,6 +31,12 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   final TextEditingController _userInput = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   final PetController _petController = Get.find();
+  final ChatBotController _chatBotController = Get.put(ChatBotController());
+
+  String initialMessage =
+      Constants().initialMessages[Random().nextInt(
+        Constants().initialMessages.length,
+      )];
   late String apiKey;
   late GenerativeModel model;
   bool isPetTalking = false;
@@ -30,6 +48,9 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
     super.initState();
     apiKey = Constants.apikey;
     model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
+    _messages.add(
+      Message(isUser: false, message: initialMessage, date: DateTime.now()),
+    );
   }
 
   final List<Message> _messages = [];
@@ -82,12 +103,16 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-    final bottomPadding = bottomInset > 0 ? bottomInset : 20;
+
+    // Listen to keyboard visibility changes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+      _chatBotController.updateKeyboardVisibility(bottomInset);
+    });
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[50],
+      resizeToAvoidBottomInset: true,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: Column(
         children: [
           Padding(
@@ -160,123 +185,144 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                     ),
 
                     // Spacer to push input up and make room for pet
-                    SizedBox(height: 100), // This creates space for the pet
+                    Container(
+                      height: 100,
+                      color: theme.scaffoldBackgroundColor,
+                      child: Center(
+                        child: Text(
+                          Constants().positiveQuotes[Random().nextInt(
+                            Constants().positiveQuotes.length,
+                          )],
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ), // This creates space for the pet
                   ],
                 ),
 
                 // Input area at the bottom
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    padding: EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      bottom: 70,
-                      top: 16,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 12,
-                          offset: const Offset(0, -4),
-                        ),
-                      ],
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(24),
-                        topRight: Radius.circular(24),
+                Obx(
+                  () => Positioned(
+                    left: 5,
+                    right: 5,
+                    bottom:
+                        _chatBotController.isKeyboardVisible.value ? 16 : 70,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      padding: EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        bottom: 0,
+                        top: 16,
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Focus(
-                                onFocusChange: (hasFocus) {
-                                  setState(() {
-                                    _isTextFieldFocused = hasFocus;
-                                  });
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[50],
-                                    borderRadius: BorderRadius.circular(24),
-                                    border: Border.all(
-                                      color:
-                                          _isTextFieldFocused
-                                              ? theme.primaryColor
-                                              : Colors.grey[300]!,
-                                      width: _isTextFieldFocused ? 1.5 : 1,
+                      decoration: BoxDecoration(
+                        color: theme.scaffoldBackgroundColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 12,
+                            offset: const Offset(0, -4),
+                          ),
+                        ],
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          topRight: Radius.circular(24),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Focus(
+                                  onFocusChange: (hasFocus) {
+                                    setState(() {
+                                      _isTextFieldFocused = hasFocus;
+                                    });
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[50],
+                                      borderRadius: BorderRadius.circular(24),
+                                      border: Border.all(
+                                        color:
+                                            _isTextFieldFocused
+                                                ? theme.primaryColor
+                                                : Colors.grey[300]!,
+                                        width: _isTextFieldFocused ? 1.5 : 1,
+                                      ),
+                                      boxShadow: [
+                                        if (_isTextFieldFocused)
+                                          BoxShadow(
+                                            // ignore: deprecated_member_use
+                                            color: theme.primaryColor
+                                                .withOpacity(0.1),
+                                            blurRadius: 8,
+                                            spreadRadius: 2,
+                                          ),
+                                      ],
                                     ),
-                                    boxShadow: [
-                                      if (_isTextFieldFocused)
-                                        BoxShadow(
-                                          // ignore: deprecated_member_use
-                                          color: theme.primaryColor.withOpacity(
-                                            0.1,
-                                          ),
-                                          blurRadius: 8,
-                                          spreadRadius: 2,
-                                        ),
-                                    ],
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const SizedBox(width: 16),
-                                      Expanded(
-                                        child: TextField(
-                                          controller: _userInput,
-                                          cursorColor: theme.primaryColor,
-                                          style: const TextStyle(
-                                            color: Colors.black87,
-                                            fontSize: 16,
-                                          ),
-                                          decoration: const InputDecoration(
-                                            hintText:
-                                                'Ask your pet anything...',
-                                            hintStyle: TextStyle(
-                                              color: Colors.grey,
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(width: 16),
+                                        Expanded(
+                                          child: TextField(
+                                            controller: _userInput,
+                                            cursorColor: theme.primaryColor,
+                                            style: const TextStyle(
+                                              color: Colors.black87,
                                               fontSize: 16,
                                             ),
-                                            border: InputBorder.none,
+                                            decoration: const InputDecoration(
+                                              hintText:
+                                                  'Ask your pet anything...',
+                                              hintStyle: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 16,
+                                              ),
+                                              border: InputBorder.none,
+                                            ),
+                                            onSubmitted:
+                                                (value) => sendMessage(),
                                           ),
-                                          onSubmitted: (value) => sendMessage(),
                                         ),
-                                      ),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.send_rounded,
-                                          color: theme.primaryColor,
-                                          size: 28,
+                                        IconButton(
+                                          icon: Icon(
+                                            Icons.send_rounded,
+                                            color: theme.primaryColor,
+                                            size: 28,
+                                          ),
+                                          onPressed: sendMessage,
                                         ),
-                                        onPressed: sendMessage,
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                      ],
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 // Pet positioned absolutely above the input
-                Positioned(
-                  left: -10,
-                  bottom: bottomPadding + 120, // Adjusted position
-                  child: GestureDetector(
-                    onTap: () {
-                      _petController.flapWings();
-                    },
-                    child: Pet(),
+                Obx(
+                  () => Positioned(
+                    left: -10,
+                    bottom:
+                        _chatBotController.isKeyboardVisible.value
+                            ? _chatBotController.keyboardHeight.value - 20
+                            : 130,
+                    child: GestureDetector(
+                      onTap: () {
+                        _petController.flapWings();
+                      },
+                      child: Pet(),
+                    ),
                   ),
                 ),
               ],

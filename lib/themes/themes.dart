@@ -16,7 +16,7 @@ class CustomTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       primaryColor: Colors.blue.shade500,
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: Colors.grey[300],
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.blue.shade50,
         titleTextStyle: TextStyle(color: Colors.blue.shade500),
