@@ -41,16 +41,18 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   late GenerativeModel model;
   bool isPetTalking = false;
   bool _isTextFieldFocused = false;
-  String previous_conversation = "";
+  // ignore: non_constant_identifier_names
+  late String previous_conversation;
 
   @override
   void initState() {
     super.initState();
-    apiKey = Constants.apikey;
+    apiKey = Constants.geminiApiKey;
     model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
     _messages.add(
       Message(isUser: false, message: initialMessage, date: DateTime.now()),
     );
+    previous_conversation = initialMessage;
   }
 
   final List<Message> _messages = [];
@@ -193,9 +195,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
                           Constants().positiveQuotes[Random().nextInt(
                             Constants().positiveQuotes.length,
                           )],
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
+                          style: TextStyle(fontSize: 20),
                         ),
                       ),
                     ), // This creates space for the pet
