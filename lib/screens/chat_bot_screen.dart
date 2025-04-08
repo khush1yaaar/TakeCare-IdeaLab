@@ -65,6 +65,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
       _messages.add(
         Message(isUser: true, message: message, date: DateTime.now()),
       );
+      _petController.nod();
       previous_conversation = "user: $previous_conversation $message";
       _userInput.clear();
       isPetTalking = true;
@@ -86,6 +87,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
           date: DateTime.now(),
         ),
       );
+      _petController.nod();
       previous_conversation = "You:$previous_conversation ${response.text}";
       isPetTalking = false;
     });
